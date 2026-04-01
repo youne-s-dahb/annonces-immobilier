@@ -5,7 +5,7 @@ public class Main {
         Connection con = DBConnection.getConnection();
 
         if (con != null) {
-            System.out.println("Connexion réussie tres bien  !");
+            System.out.println("Connexion réussie tres biennnnn  !");
         } else {
             System.out.println("Connexion échouée🙁 !");
 
