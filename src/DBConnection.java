@@ -14,10 +14,10 @@ public class DBConnection {
 
             return DriverManager.getConnection(url, user, pass);
 
-
         } catch (Exception e) {
             System.out.println("Erreur: " + e.getMessage());
             return null;
         }
+
     }
 }
