@@ -1,4 +1,6 @@
 
+import database.DBConnection;
+
 import java.sql.*;
 import java.util.Scanner;
 
@@ -51,7 +53,7 @@ public class User extends Compte {
             //____________________________
 
             String sql="INSERT INTO `user` (Nom,Prenom,Gmail,Password,Telephone) VALUES (?,?,?,?,?)";
-            try(Connection con=DBConnection.getConnection();
+            try(Connection con= DBConnection.getConnection();
                 PreparedStatement stmt =con.prepareStatement(sql))
             {
                 stmt.setString(2,nom);
