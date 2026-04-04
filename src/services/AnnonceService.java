@@ -22,7 +22,7 @@ public class AnnonceService implements annonce{
             stmt.setDouble(3, prixMax);
 
             //execute requet sql
-            ResultSet res = stmt.executeQuery();
+            ResultSet res =  stmt.executeQuery();
 
             while(res.next()){
                 //creer objet pour chaque ligne recuperé
