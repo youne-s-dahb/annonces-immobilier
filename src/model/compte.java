@@ -9,7 +9,7 @@ public class compte {
     private String password ;
     private String telephone ;
 
-    compte(int id ,String Nom,String prenom,String gmail,String password,String telephone){
+    public compte(int id ,String Nom,String prenom,String gmail,String password,String telephone){
         this.id=id;
         this.Nom=Nom;
         this.prenom=prenom;

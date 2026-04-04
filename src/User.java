@@ -1,10 +1,12 @@
 
 import database.DBConnection;
+import model.compte;
 
 import java.sql.*;
 import java.util.Scanner;
 
-public class User extends Compte {
+
+public class User extends compte {
 
 
 
