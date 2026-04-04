@@ -5,11 +5,12 @@ import model.Annonces;
 import java.sql.*;
 import java.util.*;
 
-public class AnnonceService {
+public class AnnonceService implements annonce{
 
     // Filtrer les annonces par type et prix
+    @Override
     public List<Annonces> filtrer_annonce(String type, double prixMin, double prixMax){
-        //list pour stockage des annonce filtre
+        //list pour stockage des annonce filtré dans une liste vide
         List<Annonces> annc = new ArrayList<>();
         String sql = "SELECT * FROM annonce WHERE Type=? AND Prix BETWEEN ? AND ? ";
 
@@ -26,17 +27,16 @@ public class AnnonceService {
             while(res.next()){
                 //creer objet pour chaque ligne recuperé
                 Annonces annonce = new Annonces(res.getInt("id_annonce"),
-                        res.getString("titre"),
-                        res.getString("description"),
-                        res.getDouble("prix"),
-                        res.getString("telephone"),
-                        res.getString("type"),
-                        res.getDate("date_publication"),
+                        res.getString("Titre"),
+                        res.getString("Description"),
+                        res.getDouble("Prix"),
+                        res.getString("Telephone"),
+                        res.getString("Type"),
+                        res.getDate("Date_publication"),
                         res.getInt("id_user")
                 );
                 annc.add(annonce);
             }
-
         }catch(SQLException e){
 
             e.printStackTrace(); // kate3tina details dial l'erreur
@@ -45,6 +45,10 @@ public class AnnonceService {
         return annc;
     }
 
+    //----------------------------------------------------------------------------------------------------------
+
+    //Consulter annonce par son ID
+    @Override
     public Annonces consulter_annonce(int id_annonce){
         String sql = "SELECT * FROM annonce WHERE id_annonce = ?";
         Annonces annc = null;
@@ -58,23 +62,27 @@ public class AnnonceService {
             if(res.next()){
                 annc = new Annonces(
                         res.getInt("id_annonce"),
-                        res.getString("titre"),
-                        res.getString("description"),
-                        res.getDouble("prix"),
-                        res.getString("telephone"),
-                        res.getString("type"),
-                        res.getDate("date_publication"),
+                        res.getString("Titre"),
+                        res.getString("Description"),
+                        res.getDouble("Prix"),
+                        res.getString("Telephone"),
+                        res.getString("Type"),
+                        res.getDate("Date_publication"),
                         res.getInt("id_user")
                 );
             }
 
         }catch(SQLException e){
             e.printStackTrace();
+            System.out.println("Impossible de récupérer l'annonce pour le moment. Veuillez réessayer plus tard!!");
         }
         return annc;
     }
 
+    //----------------------------------------------------------------------------------------------------------
+
     //chercher annonce par titre/desc
+    @Override
     public List<Annonces> chercher_annonce(String search){
         List<Annonces> annc = new ArrayList<>();
         String sql = "SELECT * FROM annonce WHERE Titre LIKE ? OR Description LIKE ? ";
@@ -93,12 +101,12 @@ public class AnnonceService {
                 //creer objet pour chaque ligne recuperé
                 Annonces annonce = new Annonces(
                         res.getInt("id_annonce"),
-                        res.getString("titre"),
-                        res.getString("description"),
-                        res.getDouble("prix"),
-                        res.getString("telephone"),
-                        res.getString("type"),
-                        res.getDate("date_publication"),
+                        res.getString("Titre"),
+                        res.getString("Description"),
+                        res.getDouble("Prix"),
+                        res.getString("Telephone"),
+                        res.getString("Type"),
+                        res.getDate("Date_publication"),
                         res.getInt("id_user")
                 );
                 annc.add(annonce);
@@ -106,11 +114,11 @@ public class AnnonceService {
             }
         } catch(SQLException e){
             e.printStackTrace();
+            System.out.println("Impossible de chercher l'annonce pour le moment. Veuillez réessayer plus tard!!");
+
         }
         return annc;
     }
-
-
 
 }
 

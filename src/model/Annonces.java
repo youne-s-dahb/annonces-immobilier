@@ -36,7 +36,6 @@ public class Annonces {
     public Date getDate_publication() {
         return date_publication;
     }
-
     public int getId_user() {
         return id_user;
     }

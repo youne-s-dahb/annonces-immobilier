@@ -1,15 +1,19 @@
 package services;
 
+import model.Annonces;
+
+import java.util.List;
+
 public interface annonce {
 
-    // Kat-rj3 lina list dyal l-annonces 3la hsab criteria (prix, category...)
-    //List<Annonce> filtrer_annonces(String critere, Object valeur);
+    // Kat-rj3 lina list dyal l-annonces 3la hsab critere (prix, category...)
+    public List<Annonces> filtrer_annonce(String type, double prixMin, double prixMax);
 
     // Kat-khlina n-choufo l-detail dyal annonce wa7da b-l'id dyalha
-    //Annonce consulter_annonce(int id_annonce);
+    public Annonces consulter_annonce(int id_annonce);
 
     // Kat-bhét b-l-kalimat l-mifta7iya (keyword) f l-cinwan aw l-wasf
-    //List<Annonce> chercher_annonces(String keyword);
+    public List<Annonces> chercher_annonce(String search);
 
 }
 
