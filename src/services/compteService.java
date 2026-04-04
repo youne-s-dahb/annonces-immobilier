@@ -93,17 +93,35 @@ public class compteService {
             }
 
 
-        public void Login(String password ,String gmail){
-            String Sql="SELECT Password,Gmail FROM user where Password = ? and Gmail = ?";
+        public void Login(String gmail,String password){
+            String Sql="SELECT Nom,Password,Gmail FROM user where Gmail = ?";
             try(PreparedStatement stmt =con.prepareStatement(Sql))
             {
-                ResultSet rs=stmt.executeQuery(Sql);
+                stmt.setString(1,gmail.trim());//.trim() kat7ayed espace
+
+                ResultSet rs =stmt.executeQuery();
+
+
+                if (rs.next()) {
+                    // Hna Login s7i7!
+                    String dbPassword = rs.getString("Password");
+                    if(dbPassword.equals(password)){
+                        String nom = rs.getString("Nom"); // Smiya li 3endek f BD
+                        System.out.println("Bonjour  " + nom + ", votre gmail et password et corecct !");
+                    }else{
+                        System.out.println("Mot de pass Incorrect !");
+                    }
+
+                } else {
+                    // Hna Login ghalat
+                    System.out.println("Email incorrect.");
+                }
 
             }
             catch(SQLException e){
                     System.out.println("Error dans db "+e.getMessage());
             }
-            System.out.println("hey");
+
         }
 
 }
