@@ -47,13 +47,13 @@ public class compte {
     public void setPrenom(String prenom){
         this.prenom=prenom;
     }
-    public void getGmail(String gmail){
+    public void setGmail(String gmail){
         this.gmail=gmail;
     }
-    public void getPassword(String password){
+    public void setPassword(String password){
         this.password=password;
     }
-    public void getTelephone(String telephone){
+    public void setTelephone(String telephone){
         this.telephone=telephone;
     }
     //------------------------------

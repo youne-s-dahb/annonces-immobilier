@@ -1,9 +1,12 @@
 package services;
 import database.DBConnection;
+import model.User;
+
 import java.sql.*;
 import java.util.Scanner;
 
 public class compteService {
+
         private Connection con;
         public compteService(){
             this.con=DBConnection.getConnection();
@@ -92,9 +95,8 @@ public class compteService {
                 }
             }
 
-
-        public void Login(String gmail,String password){
-            String Sql="SELECT Nom,Password,Gmail FROM user where Gmail = ?";
+        public User Login(String gmail, String password){
+            String Sql="SELECT * FROM user where Gmail = ?";
             try(PreparedStatement stmt =con.prepareStatement(Sql))
             {
                 stmt.setString(1,gmail.trim());//.trim() kat7ayed espace
@@ -106,8 +108,14 @@ public class compteService {
                     // Hna Login s7i7!
                     String dbPassword = rs.getString("Password");
                     if(dbPassword.equals(password)){
-                        String nom = rs.getString("Nom"); // Smiya li 3endek f BD
-                        System.out.println("Bonjour  " + nom + ", votre gmail et password et corecct !");
+                        return new User(
+                                rs.getInt("id_user"),
+                                rs.getString("Nom"),
+                                rs.getString("Prenom"),
+                                rs.getString("Gmail"),
+                                rs.getString("Password"),
+                                rs.getString("Telephone")
+                        );
                     }else{
                         System.out.println("Mot de pass Incorrect !");
                     }
@@ -121,8 +129,97 @@ public class compteService {
             catch(SQLException e){
                     System.out.println("Error dans db "+e.getMessage());
             }
+            return null; // ila login ghalat
 
         }
+
+        public void consulterProfil(User user) {
+            if (user != null) {
+                System.out.println("\n--- VOTRE PROFIL ---");
+                System.out.println("Nom      : " + user.getNom());
+                System.out.println("Prenom   : " + user.getPrenom());
+                System.out.println("Email    : " + user.getGmail());
+                System.out.println("Telephone: " + user.getTelephone());
+                System.out.println("--------------------\n");
+            } else {
+                System.out.println("Erreur: Aucun utilisateur connecté.");
+            }
+        }
+
+    public void modifier_info_perso(User user, Scanner sc) {
+        String nomRegex = "^[a-zA-Z]{3,}$";
+        String telephneRegex = "^[0][6-7][0-9]{8}$";
+        String passwordRegex = "(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}";
+
+        // 1. Validations
+        System.out.print("Saisi votre nouveau Nom : ");
+        String newNom = sc.nextLine();
+        while (!newNom.matches(nomRegex)) {
+            System.out.print("Nom invalide ! Saisi à nouveau : ");
+            newNom = sc.nextLine();
+        }
+
+        System.out.print("Saisi votre nouveau Prenom : ");
+        String newPrenom = sc.nextLine();
+        while (!newPrenom.matches(nomRegex)) {
+            System.out.print("Prenom invalide ! Saisi à nouveau : ");
+            newPrenom = sc.nextLine();
+        }
+
+        System.out.print("Saisi votre nouveau Telephone : ");
+        String newTelphone = sc.nextLine();
+        while (!newTelphone.matches(telephneRegex)) {
+            System.out.print("Telephone invalide ! Saisi à nouveau : ");
+            newTelphone = sc.nextLine();
+        }
+
+        // 2. Verification Password Qdim
+        System.out.print("Saisi votre ANCIEN password : ");
+        String inputOldPass = sc.nextLine();
+        while (!user.getPassword().equals(inputOldPass)) {
+            System.out.print("Ancien password incorrect ! Saisi à nouveau : ");
+            inputOldPass = sc.nextLine(); // MOUSSA7A7
+        }
+
+        // 3. Saisi Password Jdid
+        System.out.print("Saisi nouveau Password : ");
+        String newPassword = sc.nextLine();
+        while (!newPassword.matches(passwordRegex)) {
+            System.out.println("Error: Invalid format (Ex: Abcd123@)");
+            System.out.print("Saisi nouveau Password : ");
+            newPassword = sc.nextLine();
+        }
+
+        // 4. UPDATE f l-Base de données (Daba kolchi validé!)
+        String sqlUpdate = "UPDATE user SET Nom = ?, Prenom = ?, Password = ?, Telephone = ? WHERE id_user = ?";
+
+        try (PreparedStatement stmUpdate = con.prepareStatement(sqlUpdate)) {
+            stmUpdate.setString(1, newNom);
+            stmUpdate.setString(2, newPrenom);
+            stmUpdate.setString(3, newPassword);
+            stmUpdate.setString(4, newTelphone);
+            stmUpdate.setInt(5, user.getId());
+
+            int rows = stmUpdate.executeUpdate();
+            if (rows > 0) {
+                // Update l-objet f l-mémoire
+                user.setNom(newNom);
+                user.setPrenom(newPrenom);
+                user.setPassword(newPassword);
+                user.setTelephone(newTelphone);
+                System.out.println("Succès: Profil modifié avec succès !");
+            } else {
+                System.out.println("Aucune modification effectuée ! ");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error SQL: " + e.getMessage());
+        }
+    }
+
+
+
+
+
 
 }
 
