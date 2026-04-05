@@ -56,8 +56,9 @@ public class Main {
                             System.out.println("Chercher annonce     (4)");
                             System.out.println("Consulter Favoris    (5)");
                             System.out.println("Supprimer Favoris    (6)");
-                            System.out.println("Retour menu principal(7)");
-                            System.out.println("Se Deconnecter       (8)");
+                            System.out.println("Se Deconnecter       (7)");
+                            System.out.println("Retour menu principal(8)");
+
                             System.out.print("Choix : ");
 
                             choixAnnonce = sc.nextInt();
@@ -213,10 +214,7 @@ public class Main {
                                         System.out.print("Vous devez choisir soit (Y/N)");
                                     }
                                     break;
-                                case 7://retour menu principal
-                                    System.out.println("Retour menu principal...");
-                                    break;
-                                case 8://Deconnecter
+                                case 7://Deconnecter
                                     System.out.print("Vous etes sur (Y/N) : ");
                                     String input = sc.nextLine().toLowerCase();
                                     x = input.charAt(0);
@@ -228,6 +226,9 @@ public class Main {
                                     }else{
                                         System.out.print("Vous devez choisir soit (Y/N)");
                                     }
+                                    break;
+                                case 8://retour menu principal
+                                    System.out.println("Retour menu principal...");
                                     break;
 
                                 default:
