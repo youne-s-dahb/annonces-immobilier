@@ -23,51 +23,51 @@ public class compteService {
 
                 //---------- Condition ----------
                 //---------- NOM ----------
-                System.out.print("Saisi votre nom :");
+                System.out.print("Saisir votre nom :");
                 String nom=sc.nextLine();
                 while(!nom.matches(nomRegex)){
                     System.out.println("Nom doit etre supp 3 caracteres");
-                    System.out.print("Saisi votre nom :");
+                    System.out.print("Saisir votre nom :");
                     nom=sc.nextLine();
                 }
                 //---------- PRENOM ----------
-                System.out.print("Saisi votre prenom :");
+                System.out.print("Saisir votre prenom :");
                 String prenom=sc.nextLine();
                 while(!prenom.matches(prenomRegex)){
                     System.out.println("Prenom doit etre supp 3 caracteres");
-                    System.out.print("Saisi votre prenom :");
+                    System.out.print("Saisir votre prenom :");
                     prenom=sc.nextLine();
                 }
                 //---------- GMAIL ----------
-                System.out.print("Saisi votre gmail :");
+                System.out.print("Saisir votre gmail :");
                 String gmail=sc.nextLine();
                 while(!gmail.matches(gmailRegex)){
                     System.out.println("Error : Gmail incorrect !");
-                    System.out.print("Saisi votre gmail :");
+                    System.out.print("Saisir votre gmail :");
                     gmail=sc.nextLine();
                 }
                 //---------- PASSWORD ----------
-                System.out.print("Saisi votre password :");
+                System.out.print("Saisir votre password :");
                 String password=sc.nextLine();
                 while(!password.matches(passwordRegex)){
                     System.out.println("Error: Invalid password. Example: Wx1@Abcd");
-                    System.out.print("Saisi votre password :");
+                    System.out.print("Saisir votre password :");
                     password=sc.nextLine();
                 }
                 //---------- CONFIRMATION PASSWORD ----------
-                System.out.print("Saisi votre confirmation Password :");
+                System.out.print("Saisir votre confirmation Password :");
                 String confirmPassword=sc.nextLine();
                 while(!password.equals(confirmPassword)){
                     System.out.println("Error: Password et Confirm Password doivent être identiques");
-                    System.out.print("Saisi votre confirmatio Password :");
+                    System.out.print("Saisir votre confirmatio Password :");
                     confirmPassword=sc.nextLine();
                 }
                 //---------- TELEPHONE ----------
-                System.out.print("Saisi votre telephone :");
+                System.out.print("Saisir votre telephone :");
                 String telephone=sc.nextLine();
                 while(!telephone.matches(telephneRegex)){
                     System.out.println("Error : Telephone incorrect !");
-                    System.out.print("Saisi votre telephone :");
+                    System.out.print("Saisir votre telephone :");
                     telephone=sc.nextLine();
                 }
                 //____________________________
@@ -218,23 +218,40 @@ public class compteService {
     }
 
         public void publier_annonce(Annonces annonce){
-        String sql = "INSERT INTO annonce(Titre, Description, Prix, Telephone, Type, Date_publication, id_user,id_ville,id_categorie) VALUES(?, ?, ?, ?, ?, NOW(), ?,?,?)";
 
-        try(Connection conn = DBConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)){
+            //Regex:
+            String titreRegex = "^[a-zA-Z]{4,}$";
+            String descRegex = "^[A-Za-z]{10,}$";
+            String telephoneRegex="^[0][6-7][0-9]{8}$";
+            String typeRegex = "(?i)^(vente|location)$"; //(?i): ignore majuscule/miniscule
 
-            stmt.setString(1, annonce.getTitre());
-            stmt.setString(2, annonce.getDescription());
-            stmt.setDouble(3, annonce.getPrix());
-            stmt.setString(4, annonce.getTelephone());
-            stmt.setString(5, annonce.getType());
-            stmt.setInt(6, annonce.getId_user());
-            stmt.setInt(7, annonce.getIdVille());
-            stmt.setInt(8, annonce.getIdCategorie());
+            //Conditon Titre:
 
-            stmt.executeUpdate();
+            System.out.print("Saisir le titre de votre annonce: ");
 
-            System.out.println("Annonce ajouté avec succés.");
+
+            //Conditon decsription:
+            //Conditon telephone:
+            //Conditon Type:
+
+
+            String sql = "INSERT INTO annonce(Titre, Description, Prix, Telephone, Type, Date_publication, id_user,id_ville,id_categorie) VALUES(?, ?, ?, ?, ?, NOW(), ?,?,?)";
+
+            try(Connection conn = DBConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)){
+
+                stmt.setString(1, annonce.getTitre());
+                stmt.setString(2, annonce.getDescription());
+                stmt.setDouble(3, annonce.getPrix());
+                stmt.setString(4, annonce.getTelephone());
+                stmt.setString(5, annonce.getType());
+                stmt.setInt(6, annonce.getId_user());
+                stmt.setInt(7, annonce.getIdVille());
+                stmt.setInt(8, annonce.getIdCategorie());
+
+                stmt.executeUpdate();
+
+                System.out.println("Annonce ajouté avec succés.");
 
         }catch(SQLException e){
             e.printStackTrace();
