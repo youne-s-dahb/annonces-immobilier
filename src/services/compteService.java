@@ -1,5 +1,6 @@
 package services;
 import database.DBConnection;
+import model.Annonces;
 import model.User;
 
 import java.sql.*;
@@ -146,7 +147,7 @@ public class compteService {
             }
         }
 
-    public void modifier_info_perso(User user, Scanner sc) {
+        public void modifier_info_perso(User user, Scanner sc) {
         String nomRegex = "^[a-zA-Z]{3,}$";
         String telephneRegex = "^[0][6-7][0-9]{8}$";
         String passwordRegex = "(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}";
@@ -213,6 +214,31 @@ public class compteService {
             }
         } catch (SQLException e) {
             System.out.println("Error SQL: " + e.getMessage());
+        }
+    }
+
+        public void publier_annonce(Annonces annonce){
+        String sql = "INSERT INTO annonce(Titre, Description, Prix, Telephone, Type, Date_publication, id_user,id_ville,id_categorie) VALUES(?, ?, ?, ?, ?, NOW(), ?,?,?)";
+
+        try(Connection conn = DBConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+
+            stmt.setString(1, annonce.getTitre());
+            stmt.setString(2, annonce.getDescription());
+            stmt.setDouble(3, annonce.getPrix());
+            stmt.setString(4, annonce.getTelephone());
+            stmt.setString(5, annonce.getType());
+            stmt.setInt(6, annonce.getId_user());
+            stmt.setInt(7, annonce.getIdVille());
+            stmt.setInt(8, annonce.getIdCategorie());
+
+            stmt.executeUpdate();
+
+            System.out.println("Annonce ajouté avec succés.");
+
+        }catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("Erreur lors de publication de lannonce. Veuillez réessayer plus tard!");
         }
     }
 
