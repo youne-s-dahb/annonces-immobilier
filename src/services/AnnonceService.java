@@ -126,6 +126,25 @@ public class AnnonceService implements annonce{
         return annc;
     }
 
+    //Supprimer annonces
+    public void  Supprimer_Annonces(int id_annonce){
+        String Sql="DELETE FROM annonces where id_annonce= ?";
+        try(Connection conn = DBConnection.getConnection();
+            PreparedStatement stmt=conn.prepareStatement(Sql))
+        {
+                stmt.setInt(1,id_annonce);
+                int rows=stmt.executeUpdate();
+                if(rows>0){
+                    System.out.println("✅ Annonces supprimé avec succès !");
+                }else{
+                    System.out.println("⚠️ Aucun Annonces  trouvé avec cet ID.");
+                }
+        }
+        catch (SQLException e){
+
+        }
+    }
+
 }
 
 
