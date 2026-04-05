@@ -73,5 +73,23 @@ public class FavoriesServices {
 
     }
 
+    public void Supprimer_favorie(int id_favorie){
+
+            String Sql="DELETE FROM favoris WHERE id_favoris = ?";
+            try(PreparedStatement stmt=con.prepareStatement(Sql))
+            {
+                stmt.setInt(1,id_favorie);
+                int row=stmt.executeUpdate();
+                if (row > 0) {
+                    System.out.println("✅ Favori supprimé avec succès !");
+                } else {
+                    System.out.println("⚠️ Aucun favori trouvé avec cet ID.");
+                }
+            }
+            catch (SQLException e){
+                System.out.println("Error Sql :"+e.getMessage());
+            }
+    }
+
 
 }

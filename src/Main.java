@@ -49,13 +49,14 @@ public class Main {
 
                         int choixAnnonce = 0;
 
-                        while (choixAnnonce != 3) {
+                        while (choixAnnonce != 5) {
 
                             System.out.println("\n**** MENU ANNONCE ****");
                             System.out.println("Ajouter annonce      (1)");
                             System.out.println("Chercher annonce     (2)");
                             System.out.println("Consulter Favoris    (3)");
-                            System.out.println("Retour menu principal(4)");
+                            System.out.println("Supprimer Favoris    (4)");
+                            System.out.println("Retour menu principal(5)");
                             System.out.print("Choix : ");
 
                             choixAnnonce = sc.nextInt();
@@ -147,6 +148,7 @@ public class Main {
                                         }
                                     } else {
                                         System.out.println("Aucune annonce trouvée pour : " + search);
+                                        choixAnnonce=0;
                                     }
 
                                     break;
@@ -163,18 +165,36 @@ public class Main {
                                             String dateStr = sdf.format(f.getDateAjoutFav()); // Smiya d l-getter li derti f l-Model
 
                                             System.out.println("====================================");
-                                            System.out.println("ID                              : " + f.getIdFavorie());
-                                            System.out.println("Titre                           : " + f.getTitre());
-                                            System.out.println("Description                     : " + f.getDescription());
-                                            System.out.println("Ajouté le                       : " + dateStr); // Ghadi t-ban b s-sway3 w d-dqayq
-                                            System.out.println("Type (vente - Location)         : " + f.getType());
-                                            System.out.println("Telephone                       : " + f.getTelephone());
-                                            System.out.println("Prix                            : " + f.getPrix() + " DH");
+                                            System.out.println("ID                                      : " + f.getIdFavorie());
+                                            System.out.println("Titre                                   : " + f.getTitre());
+                                            System.out.println("Description                             : " + f.getDescription());
+                                            System.out.println("Ajouté le                               : " + dateStr); // Ghadi t-ban b s-sway3 w d-dqayq
+                                            System.out.println("Type (vente - Location)                 : " + f.getType());
+                                            System.out.println("Telephone                               : " + f.getTelephone());
+                                            System.out.println("Prix                                    : " + f.getPrix() + " DH");
+
                                             System.out.println("====================================");
                                         }
                                     }
                                     break;
                                 case 4:
+
+                                    System.out.print("Donne moi ID d'annonce que tu peux Supprimer :");
+                                    int id=sc.nextInt();
+                                    sc.nextLine();
+                                    System.out.print  ("Vous etes sur que tu peux supprimer cette favoris (Y/N) \uD83D\uDDD1\uFE0F :");
+                                    String y_n=sc.nextLine().toLowerCase();
+                                    char x = y_n.charAt(0);
+                                    if(x=='y'){
+                                        favoriesServices.Supprimer_favorie(id);
+                                        break;
+                                    }else if(x=='n'){
+                                        choix = 0;
+                                    }else{
+                                        System.out.print("Vous devez choisir soit (Y/N)");
+                                    }
+                                    break;
+                                case 5:
                                     System.out.println("Retour menu principal...");
                                     break;
 
