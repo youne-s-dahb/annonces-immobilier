@@ -256,10 +256,11 @@ public class Main {
                 sc.nextLine();
                 continue; // Bach t-rje3 l l-bdya d l-loop bla ma t-kemmel l-switch
             };
-            sc.close();
+
 
 
 
         };
+        sc.close();
     };
 };
