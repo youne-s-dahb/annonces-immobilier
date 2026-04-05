@@ -107,7 +107,7 @@ public class Main {
                                     System.out.print("Ville  (1=Oujda,2=Casablanca,3=Rabat,4=Tanger)  : ");
                                     int Idville = sc.nextInt();
 
-                                    System.out.print("Ville  (1=Appartement,2=Villa,3=Terrain,4=Bureau)  : ");
+                                    System.out.print("Categorie  (1=Appartement,2=Villa,3=Terrain,4=Bureau)  : ");
                                     int IdCategorie = sc.nextInt();
 
                                     Annonces annonce = new Annonces(
@@ -125,7 +125,7 @@ public class Main {
 
                                     );
 
-                                    service.publier_annonce(annonce);
+                                    service.publier_annonce(annonce, sc);
 
                                     break;
 
