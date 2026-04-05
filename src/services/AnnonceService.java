@@ -2,6 +2,8 @@ package services;
 
 import database.DBConnection;
 import model.Annonces;
+import model.User;
+
 import java.sql.*;
 import java.util.*;
 
@@ -11,7 +13,7 @@ public class AnnonceService implements annonce{
     @Override
     public List<Annonces> filtrer_annonce(String type, double prixMin, double prixMax){
         //list pour stockage des annonce filtré dans une liste vide
-        List<Annonces> annc = new ArrayList<>();
+        List<Annonces> annc =  new ArrayList<>();
         String sql = "SELECT * FROM annonce WHERE Type=? AND Prix BETWEEN ? AND ? ";
 
         try(Connection conn = DBConnection.getConnection();
@@ -52,7 +54,8 @@ public class AnnonceService implements annonce{
     //Consulter annonce par son ID
     @Override
     public Annonces consulter_annonce(int id_annonce){
-        String sql = "SELECT a.*, v.* FROM annonce a JOIN ville v ON a.id_ville = v.id_ville WHERE a.id_annonce = ?";        Annonces annc = null;
+        String sql = "SELECT a.*, v.* FROM annonce a JOIN ville v ON a.id_ville = v.id_ville WHERE a.id_annonce = ?";
+        Annonces annc = null;
 
         try(Connection conn = DBConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)){
@@ -62,7 +65,7 @@ public class AnnonceService implements annonce{
 
             if(res.next()){
                 annc = new Annonces(
-                        res.getInt("id_annonce"),
+                        res.getInt("id_annonce"), //
                         res.getString("Titre"),
                         res.getString("Description"),
                         res.getDouble("Prix"),
@@ -126,6 +129,88 @@ public class AnnonceService implements annonce{
         return annc;
     }
 
+    //------------------------------------------------------------------------------------------------------------------
+    //modifier annonce
+    public void modifier_annonce(User userConnecte, Scanner sc,int idAnnonce){
+        //Regex:
+        String titreRegex = "^[A-Za-z0-9 ]{4,}$";
+        String descRegex = "^.{10,}$";
+        String telephoneRegex="^[0][5-7][0-9]{8}$";
+        String typeRegex = "(?i)^(vente|location)$";
+
+        //Condition + modif Titre
+        System.out.print("Modifier le titre de votre annonce: ");
+        String titre = sc.nextLine();
+        while(!titre.matches(titreRegex)){
+            System.out.println("Le titre doit contenir au moins 4 caractères!!");
+            System.out.print("Modifier le titre de votre annonce: ");
+            titre = sc.nextLine();
+        }
+
+        //Condition + modif Description
+        System.out.print("Modifier la description de votre annonce: ");
+        String desc = sc.nextLine();
+        while(!desc.matches(descRegex)){
+            System.out.println("La description doit contenir au moins 10 lettres!!");
+            System.out.print("Modifier la description de votre annonce: ");
+            desc = sc.nextLine();
+        }
+
+        //Condition + modif Telephone
+        System.out.print("Modifier votre numero de telephone: ");
+        String tele = sc.nextLine();
+        while(!tele.matches(telephoneRegex)){
+            System.out.println("Le numéro doit commencer par 05, 06 ou 07 et contenir 10 chiffres!!");
+            System.out.print("Modifier votre numero de telephone: ");
+            tele = sc.nextLine();
+        }
+
+        //Condition + modif Type
+        System.out.print("Modifier le type de votre annonce (Vente/Location): ");
+        String type = sc.nextLine();
+        while(!type.matches(typeRegex)){
+            System.out.println("Vous devez choisir (Vente/Location)!");
+            System.out.print("Modifier le type de votre annonce: ");
+            type = sc.nextLine();
+        }
+
+        //Modifier Prix
+        System.out.print("Modifier le prix:");
+        double prix = sc.nextDouble();
+        sc.nextLine();
+
+        //modifier ville
+        System.out.print("Modifier la ville  (1=Oujda,2=Casablanca,3=Rabat,4=Tanger)  : ");
+        int idVille = sc.nextInt();
+
+        Annonces annonce = new Annonces();
+
+        //sql update
+        String sql = "UPDATE annonce SET Titre=?, Description=?, Prix=?, Telephone=?, Type=?, id_ville=? WHERE id_annonce=?";
+
+        try(Connection conn = DBConnection.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql)){
+
+            stmt.setString(1, titre);
+            stmt.setString(2, desc);
+            stmt.setDouble(3, prix);
+            stmt.setString(4, tele);
+            stmt.setString(5, type);
+            stmt.setInt(6, idVille);
+            stmt.setInt(7, idAnnonce);
+
+            stmt.executeUpdate();
+
+            System.out.println("Annonce modifiée avec succès:)");
+
+        }catch(SQLException e){
+            e.printStackTrace();
+            System.out.println("Erreur lors de la modofication de l'annonce. Veuillez réessayez plus tard.");
+        }
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+
     //Supprimer annonces
     public void  Supprimer_Annonces(int id_annonce){
         String Sql="DELETE FROM annonces where id_annonce= ?";
@@ -141,7 +226,8 @@ public class AnnonceService implements annonce{
                 }
         }
         catch (SQLException e){
-
+            e.printStackTrace();
+            System.out.println("Impossible de supprimer l'annonce actuellement. Veuillez réessayer plus tard");
         }
     }
 

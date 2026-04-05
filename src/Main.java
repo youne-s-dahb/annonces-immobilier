@@ -54,11 +54,12 @@ public class Main {
                                 System.out.println("Consulter Profil     (1)");
                                 System.out.println("Modifier  Profil     (2)");
                                 System.out.println("Ajouter annonce      (3)");
-                                System.out.println("Chercher annonce     (4)");
-                                System.out.println("Consulter Favoris    (5)");
-                                System.out.println("Supprimer Favoris    (6)");
-                                System.out.println("Se Deconnecter       (7)");
-                                System.out.println("Retour menu principal(8)");
+                                System.out.println("Modifier annonce     (4)");
+                                System.out.println("Chercher annonce     (5)");
+                                System.out.println("Consulter Favoris    (6)");
+                                System.out.println("Supprimer Favoris    (7)");
+                                System.out.println("Se Deconnecter       (8)");
+                                System.out.println("Retour menu principal(9)");
 
                                 System.out.print("Choix : ");
 
@@ -71,7 +72,6 @@ public class Main {
                                         //ConsulterProfil
                                         if (userConncte != null) {
                                             service.consulterProfil(userConncte);
-
 
                                         } else {
                                             System.out.println("N'est pas Connecter !");
@@ -90,48 +90,30 @@ public class Main {
 
                                     case 3: // -------- AJOUTER ANNONCE --------
 
-                                        System.out.print("Titre : ");
-                                        String titre = sc.nextLine();
+                                        if (userConncte != null) {
+                                            service.publier_annonce(userConncte , sc);
 
-                                        System.out.print("Description : ");
-                                        String description = sc.nextLine();
-
-                                        System.out.print("Prix : ");
-                                        double prix = sc.nextDouble();
-                                        sc.nextLine();
-
-                                        System.out.print("Telephone : ");
-                                        String tel = sc.nextLine();
-
-                                        System.out.print("Type : ");
-                                        String type = sc.nextLine();
-
-                                        System.out.print("Ville  (1=Oujda,2=Casablanca,3=Rabat,4=Tanger)  : ");
-                                        int Idville = sc.nextInt();
-
-                                        System.out.print("Ville  (1=Appartement,2=Villa,3=Terrain,4=Bureau)  : ");
-                                        int IdCategorie = sc.nextInt();
-
-                                        Annonces annonce = new Annonces(
-                                                0,
-                                                titre,
-                                                description,
-                                                prix,
-                                                tel,
-                                                type,
-
-                                                null,
-                                                userConncte.getId() ,// id user automatique
-                                                Idville,
-                                                IdCategorie
-
-                                        );
-
-                                        service.publier_annonce(annonce);
-
+                                        } else {
+                                            System.out.println("N'est pas Connecter !");
+                                        }
                                         break;
 
-                                    case 4:// -------- CHERCHER ANNONCE --------
+                                    case 4:
+                                        //Modifier annonce:
+                                        if(userConncte != null){
+                                            System.out.print("Entrez l'ID de l'annonce à modifier: ");
+                                            int idAnnonce = sc.nextInt();
+                                            sc.nextLine(); // consommer le saut de ligne
+
+                                            annonceService.modifier_annonce(userConncte, sc, idAnnonce);
+                                        }
+                                        else {
+                                            System.out.println("N'est pas Connecter !");
+                                        }
+                                        break;
+
+
+                                    case 5:// -------- CHERCHER ANNONCE --------
 
                                         System.out.print("Mot clé recherche : ");
                                         String search = sc.nextLine();
@@ -144,6 +126,7 @@ public class Main {
 
                                             Annonces a = annonces.get(i);
 
+                                            System.out.println("------------------------");
                                             System.out.println("ID : " + a.getId_annonce());
                                             System.out.println("Titre : " + a.getTitre());
                                             System.out.println("Prix : " + a.getPrix());
@@ -174,7 +157,7 @@ public class Main {
                                         }
 
                                         break;
-                                    case 5:// -------- Consulter list favorie --------
+                                    case 6:// -------- Consulter list favorie --------
                                         List<FaavoriesExtendAnnonces> mesFavs = favoriesServices.Consulter_list_favorie(userConncte.getId());
 
                                         if (mesFavs.isEmpty()) {
@@ -199,7 +182,7 @@ public class Main {
                                             }
                                         }
                                         break;
-                                    case 6:// -------- Supprimer favorie  --------
+                                    case 7:// -------- Supprimer favorie  --------
 
                                         System.out.print("Donne moi ID d'annonce que tu peux Supprimer :");
                                         int id=sc.nextInt();
@@ -216,21 +199,26 @@ public class Main {
                                             System.out.print("Vous devez choisir soit (Y/N)");
                                         }
                                         break;
-                                    case 7://Deconnecter
-                                        System.out.print("Vous etes sur (Y/N) : ");
+
+                                    case 8://Deconnecter
+                                        System.out.print("Vous etes sur ? (Y/N) : ");
                                         String input = sc.nextLine().toLowerCase();
                                         x = input.charAt(0);
-                                        if(x=='y'){
+                                        if (x == 'y') {
                                             System.out.println("Au revoir !!!");
-                                            break;
-                                        }else if(x=='n'){
-                                            choix = 0;
-                                        }else{
-                                            System.out.print("Vous devez choisir soit (Y/N)");
+                                            choixAnnonce = 8; // Force sortie de la boucle des annonces
+                                            userConncte = null; // Déconnexion
+                                        } else if (x == 'n') {
+                                            System.out.println("Vous restez connecté.");
+                                            // rien à faire, reste dans la boucle
+                                        } else {
+                                            System.out.println("Vous devez choisir soit (Y/N)");
                                         }
                                         break;
-                                    case 8://retour menu principal
+
+                                    case 9://retour menu principal
                                         System.out.println("Retour menu principal...");
+                                        choixAnnonce = 8; //force la sortie de la boucle des annonces
                                         break;
 
                                     default:
