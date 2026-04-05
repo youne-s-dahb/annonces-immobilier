@@ -251,10 +251,10 @@ public class compteService {
         }
     }
 
-        public void publier_annonce(Annonces annonce, Scanner sc){
+        public void publier_annonce(User userConnecte, Scanner sc){
 
             //Regex:
-            String titreRegex = "^[a-zA-Z]{4,}$";
+            String titreRegex = "^[A-Za-z0-9 ]{4,}$";
             String descRegex = "^[A-Za-z]{10,}$";
             String telephoneRegex="^[0][5-7][0-9]{8}$";
             String typeRegex = "(?i)^(vente|location)$"; //(?i): ignore majuscule/miniscule
@@ -293,6 +293,31 @@ public class compteService {
                 System.out.print("Choisir le type de votre annonce(Vente/Location): ");
                 type = sc.nextLine();
             }
+            //Prix
+            System.out.print("Saisir le prix:");
+            double prix = sc.nextDouble();
+            sc.nextLine();
+
+            //ville
+            System.out.print("Ville  (1=Oujda,2=Casablanca,3=Rabat,4=Tanger)  : ");
+            int Idville = sc.nextInt();
+
+            //Categorie
+            System.out.print("Categorie  (1=Appartement,2=Villa,3=Terrain,4=Bureau)  : ");
+            int IdCategorie = sc.nextInt();
+
+
+            // Créer annonce vide et remplir avec setters
+            Annonces annonce = new Annonces();
+            annonce.setTitre(titre);
+            annonce.setDescription(desc);
+            annonce.setPrix(prix);
+            annonce.setTelephone(tele);
+            annonce.setType(type);
+            annonce.setId_user(userConnecte.getId()); // id user connecté
+            annonce.setIdVille(Idville);
+            annonce.setIdCategorie(IdCategorie);
+
 
             //-------------------------------------------------------------------------------------
 

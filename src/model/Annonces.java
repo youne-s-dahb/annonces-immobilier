@@ -81,6 +81,7 @@ public class Annonces {
         this.IdCategorie = idCategorie;
     }
 
+    public Annonces(){}
 
     //constructeur par params:
     public Annonces(int id_annonce, String titre, String description, double prix, String telephone, String type, Date date_publication , int id_user ,int idville,int idCategorie){
