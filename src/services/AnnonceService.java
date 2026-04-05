@@ -61,7 +61,7 @@ public class AnnonceService implements annonce{
 
             if(res.next()){
                 annc = new Annonces(
-                        res.getInt("id_annonce"),
+                        res.getInt("id_annonce"), //
                         res.getString("Titre"),
                         res.getString("Description"),
                         res.getDouble("Prix"),
