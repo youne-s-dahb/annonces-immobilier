@@ -1,12 +1,15 @@
 import java.util.*;
 
+import model.Annonces;
 import model.User;
+import services.AnnonceService;
 import services.compteService;
 
 public class Main {
     public static void main(String[] args) {
 
         compteService service = new compteService();
+        AnnonceService annonceService=new AnnonceService();
         Scanner sc=new Scanner(System.in);
         User userConncte= null;
         int choix=0;
@@ -36,7 +39,106 @@ public class Main {
                     String password = sc.nextLine();
                     userConncte = service.Login(gmail, password); // Hna kn39lo  3LA l-user li rje3 men l-Login
                     if (userConncte != null) {
-                        System.out.println("Connecté avec succès");
+
+                        System.out.println("Connexion réussie !");
+
+                        int choixAnnonce = 0;
+
+                        while (choixAnnonce != 3) {
+
+                            System.out.println("\n**** MENU ANNONCE ****");
+                            System.out.println("Ajouter annonce      (1)");
+                            System.out.println("Chercher annonce     (2)");
+                            System.out.println("Retour menu principal(3)");
+                            System.out.print("Choix : ");
+
+                            choixAnnonce = sc.nextInt();
+                            sc.nextLine();
+
+                            switch (choixAnnonce) {
+
+                                // -------- AJOUTER ANNONCE --------
+
+                                case 1:
+
+                                    System.out.print("Titre : ");
+                                    String titre = sc.nextLine();
+
+                                    System.out.print("Description : ");
+                                    String description = sc.nextLine();
+
+                                    System.out.print("Prix : ");
+                                    double prix = sc.nextDouble();
+                                    sc.nextLine();
+
+                                    System.out.print("Telephone : ");
+                                    String tel = sc.nextLine();
+
+                                    System.out.print("Type : ");
+                                    String type = sc.nextLine();
+
+                                    System.out.print("Ville  (1=Oujda,2=Casablanca,3=Rabat,4=Tanger)  : ");
+                                    int Idville = sc.nextInt();
+
+                                    System.out.print("Ville  (1=Appartement,2=Villa,3=Terrain,4=Bureau)  : ");
+                                    int IdCategorie = sc.nextInt();
+
+                                    Annonces annonce = new Annonces(
+                                            0,
+                                            titre,
+                                            description,
+                                            prix,
+                                            tel,
+                                            type,
+
+                                            null,
+                                            userConncte.getId() ,// id user automatique
+                                            Idville,
+                                            IdCategorie
+
+                                    );
+
+                                    service.publier_annonce(annonce);
+
+                                    break;
+
+                                // -------- CHERCHER ANNONCE --------
+
+                                case 2:
+
+                                    System.out.print("Mot clé recherche : ");
+                                    String search = sc.nextLine();
+
+                                    List<Annonces> annonces = annonceService.chercher_annonce(search);
+
+                                    int i = 0;
+
+                                    while (i < annonces.size()) {
+
+                                        Annonces a = annonces.get(i);
+
+                                        System.out.println("ID : " + a.getId_annonce());
+                                        System.out.println("Titre : " + a.getTitre());
+                                        System.out.println("Prix : " + a.getPrix());
+                                        System.out.println("Type : " + a.getType());
+                                        System.out.println("------------------------");
+
+                                        i++;
+                                    }
+
+                                    break;
+
+                                case 3:
+                                    System.out.println("Retour menu principal...");
+                                    break;
+
+                                default:
+                                    System.out.println("Choix invalide !");
+                            }
+                        }
+
+                    } else {
+                        System.out.println("Email ou mot de passe incorrect !");
                     }
                     System.out.println("********************************************************************");
                     break;

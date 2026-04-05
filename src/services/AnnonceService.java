@@ -33,7 +33,9 @@ public class AnnonceService implements annonce{
                         res.getString("Telephone"),
                         res.getString("Type"),
                         res.getDate("Date_publication"),
-                        res.getInt("id_user")
+                        res.getInt("id_user"),
+                        res.getInt("id_ville"),
+                        res.getInt("id_categorie")
                 );
                 annc.add(annonce);
             }
@@ -50,8 +52,7 @@ public class AnnonceService implements annonce{
     //Consulter annonce par son ID
     @Override
     public Annonces consulter_annonce(int id_annonce){
-        String sql = "SELECT * FROM annonce WHERE id_annonce = ?";
-        Annonces annc = null;
+        String sql = "SELECT a.*, v.* FROM annonce a JOIN ville v ON a.id_ville = v.id_ville WHERE a.id_annonce = ?";        Annonces annc = null;
 
         try(Connection conn = DBConnection.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql)){
@@ -68,7 +69,9 @@ public class AnnonceService implements annonce{
                         res.getString("Telephone"),
                         res.getString("Type"),
                         res.getDate("Date_publication"),
-                        res.getInt("id_user")
+                        res.getInt("id_user"),
+                        res.getInt("id_ville"),
+                        res.getInt("id_categorie")
                 );
             }
 
@@ -107,7 +110,10 @@ public class AnnonceService implements annonce{
                         res.getString("Telephone"),
                         res.getString("Type"),
                         res.getDate("Date_publication"),
-                        res.getInt("id_user")
+                        res.getInt("id_user"),
+                        res.getInt("id_ville"),
+                        res.getInt("id_categorie")
+
                 );
                 annc.add(annonce);
 
