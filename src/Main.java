@@ -17,13 +17,10 @@ public class Main {
         Scanner sc=new Scanner(System.in);
         User userConncte= null;
         int choix=0;
-        while (choix != 5) {
+        while (choix != 2) {
             System.out.println("************************* MENU PRINCIPAL ********************************************");
             System.out.println("Creer un compte    (1)");
             System.out.println("Se Connecter       (2)");
-            System.out.println("Consulter Profil   (3)");
-            System.out.println("Modifier  Profil   (4)");
-            System.out.println("Se Deconnecter     (5)");
             System.out.print("saisi votre choix  :");
 
             choix = sc.nextInt();
@@ -37,6 +34,7 @@ public class Main {
                     break;
 
                 case 2://Login+AjouterAnnonces+ChercherAnoonces+AjouterAnnoncesAuFavorie
+
                     System.out.println("***********************Login********************************");
                     System.out.print("Saisi votre gmail :");
                     String gmail = sc.nextLine();
@@ -49,14 +47,18 @@ public class Main {
 
                         int choixAnnonce = 0;
 
-                        while (choixAnnonce != 5) {
+                        while (choixAnnonce != 8) {
 
                             System.out.println("\n**** MENU ANNONCE ****");
-                            System.out.println("Ajouter annonce      (1)");
-                            System.out.println("Chercher annonce     (2)");
-                            System.out.println("Consulter Favoris    (3)");
-                            System.out.println("Supprimer Favoris    (4)");
-                            System.out.println("Retour menu principal(5)");
+                            System.out.println("Consulter Profil     (1)");
+                            System.out.println("Modifier  Profil     (2)");
+                            System.out.println("Ajouter annonce      (3)");
+                            System.out.println("Chercher annonce     (4)");
+                            System.out.println("Consulter Favoris    (5)");
+                            System.out.println("Supprimer Favoris    (6)");
+                            System.out.println("Se Deconnecter       (7)");
+                            System.out.println("Retour menu principal(8)");
+
                             System.out.print("Choix : ");
 
                             choixAnnonce = sc.nextInt();
@@ -64,9 +66,27 @@ public class Main {
 
                             switch (choixAnnonce) {
 
+                                case 1:
+                                    //ConsulterProfil
+                                    if (userConncte != null) {
+                                        service.consulterProfil(userConncte);
+
+                                    } else {
+                                        System.out.println("N'est pas Connecter !");
+                                    }
+                                    break;
+                                case 2:
+                                    //ModifierINfoUSer
+                                    if(userConncte!=null){
+                                        service.modifier_info_perso(userConncte,sc);
+                                    }
+                                    else {
+                                        System.out.println("N'est pas Connecter !");
+                                    }
+                                    break;
 
 
-                                case 1: // -------- AJOUTER ANNONCE --------
+                                case 3: // -------- AJOUTER ANNONCE --------
 
                                     System.out.print("Titre : ");
                                     String titre = sc.nextLine();
@@ -109,7 +129,7 @@ public class Main {
 
                                     break;
 
-                                case 2:// -------- CHERCHER ANNONCE --------
+                                case 4:// -------- CHERCHER ANNONCE --------
 
                                     System.out.print("Mot clé recherche : ");
                                     String search = sc.nextLine();
@@ -152,7 +172,7 @@ public class Main {
                                     }
 
                                     break;
-                                case 3:
+                                case 5:// -------- Consulter list favorie --------
                                     List<FaavoriesExtendAnnonces> mesFavs = favoriesServices.Consulter_list_favorie(userConncte.getId());
 
                                     if (mesFavs.isEmpty()) {
@@ -177,7 +197,7 @@ public class Main {
                                         }
                                     }
                                     break;
-                                case 4:
+                                case 6:// -------- Supprimer favorie  --------
 
                                     System.out.print("Donne moi ID d'annonce que tu peux Supprimer :");
                                     int id=sc.nextInt();
@@ -194,7 +214,20 @@ public class Main {
                                         System.out.print("Vous devez choisir soit (Y/N)");
                                     }
                                     break;
-                                case 5:
+                                case 7://Deconnecter
+                                    System.out.print("Vous etes sur (Y/N) : ");
+                                    String input = sc.nextLine().toLowerCase();
+                                    x = input.charAt(0);
+                                    if(x=='y'){
+                                        System.out.println("Au revoir !!!");
+                                        break;
+                                    }else if(x=='n'){
+                                        choix = 0;
+                                    }else{
+                                        System.out.print("Vous devez choisir soit (Y/N)");
+                                    }
+                                    break;
+                                case 8://retour menu principal
                                     System.out.println("Retour menu principal...");
                                     break;
 
@@ -206,39 +239,8 @@ public class Main {
                     } else {
                         System.out.println("Email ou mot de passe incorrect !");
                     }
+
                     System.out.println("********************************************************************");
-                    break;
-
-
-                case 3://ConsulterProfil
-                    if (userConncte != null) {
-                        service.consulterProfil(userConncte);
-                    } else {
-                        System.out.println("N'est pas Connecter !");
-                    }
-                    break;
-
-                case 4://ModifierINfoUSer
-                    if(userConncte!=null){
-                        service.modifier_info_perso(userConncte,sc);
-                    }
-                    else {
-                        System.out.println("N'est pas Connecter !");
-                    }
-                    break;
-
-                case 5://Deconnecter
-                    System.out.print("Vous etes sur (Y/N) : ");
-                    String input = sc.nextLine().toLowerCase();
-                    char x = input.charAt(0);
-                    if(x=='y'){
-                        System.out.println("Au revoir !!!");
-                        break;
-                    }else if(x=='n'){
-                        choix = 0;
-                    }else{
-                        System.out.print("Vous devez choisir soit (Y/N)");
-                    }
                     break;
 
                 default:
