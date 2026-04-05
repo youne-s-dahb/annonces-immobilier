@@ -11,7 +11,7 @@ public class AnnonceService implements annonce{
     @Override
     public List<Annonces> filtrer_annonce(String type, double prixMin, double prixMax){
         //list pour stockage des annonce filtré dans une liste vide
-        List<Annonces> annc = new ArrayList<>();
+        List<Annonces> annc =  new ArrayList<>();
         String sql = "SELECT * FROM annonce WHERE Type=? AND Prix BETWEEN ? AND ? ";
 
         try(Connection conn = DBConnection.getConnection();
