@@ -12,7 +12,9 @@ public class Annonces {
     private String telephone;
     private String type;
     private Date date_publication;
+    private int idville ;
     private int id_user;
+    private int IdCategorie;
 
     //Getters:
     public int getId_annonce() {
@@ -38,6 +40,12 @@ public class Annonces {
     }
     public int getId_user() {
         return id_user;
+    }
+    public int getIdVille() {
+        return idville;
+    }
+    public int getIdCategorie() {
+        return IdCategorie;
     }
 
     //Setters:
@@ -66,9 +74,16 @@ public class Annonces {
     public void setId_user(int id_user) {
         this.id_user = id_user;
     }
+    public void setIdVille(int idville) {
+        this.idville = idville;
+    }
+    public void setIdCategorie(int idCategorie) {
+        this.IdCategorie = idCategorie;
+    }
+
 
     //constructeur par params:
-    public Annonces(int id_annonce, String titre, String description, double prix, String telephone, String type, Date date_publication , int id_user){
+    public Annonces(int id_annonce, String titre, String description, double prix, String telephone, String type, Date date_publication , int id_user ,int idville,int idCategorie){
         this.id_annonce = id_annonce;
         this.titre = titre;
         this.description = description;
@@ -77,5 +92,7 @@ public class Annonces {
         this.type = type;
         this.date_publication = date_publication;
         this.id_user = id_user;
+        this.idville=idville;
+        this.IdCategorie=idCategorie;
     }
 }
