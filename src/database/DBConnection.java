@@ -1,3 +1,5 @@
+package database;
+
 import java.sql.*;
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -14,10 +16,10 @@ public class DBConnection {
 
             return DriverManager.getConnection(url, user, pass);
 
-
         } catch (Exception e) {
             System.out.println("Erreur: " + e.getMessage());
             return null;
         }
+
     }
 }
