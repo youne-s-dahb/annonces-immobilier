@@ -19,7 +19,7 @@ public class Main {
         int choix=0;
         while (choix != 2) {
             try{
-                System.out.println("************************* MENU PRINCIPAL ********************************************");
+                System.out.println("************************* MENU de connexion ********************************************");
                 System.out.println("Creer un compte    (1)");
                 System.out.println("Se Connecter       (2)");
                 System.out.print("saisi votre choix  :");
@@ -59,13 +59,34 @@ public class Main {
 
 
                         if (userConncte != null) {
+
+                            if(userConncte.getRole().equals("Admin")){
+                                System.out.println("\n**** MENU ADMIN ****");
+
+                                System.out.println("LISTE DE TOUS  LES USERS         (1)");
+                                System.out.println("LISTE DE TOUS  LES ANNONCES      (2)");
+                                System.out.println("Supprimer un User                (3)");
+                                System.out.println("Chercher annonce                 (4)");
+                                System.out.println("Supprimer annonce                (5)");
+                                System.out.println("Consulter Favoris                (6)");
+                                System.out.println("Supprimer Favoris                (7)");
+                                System.out.println("Arreter le programe              (8)");
+                                System.out.println("Se Deconnecter                   (9)");
+
+                                System.out.print("Choix : ");
+
+                                int choixAdmin = sc.nextInt();
+                                sc.nextLine();
+                            }else{
+
+
                             System.out.println("Connexion réussie !");
 
                             int choixAnnonce = 0;
 
                             while (choixAnnonce != 10) {
 
-                                System.out.println("\n**** MENU ANNONCE ****");
+                                System.out.println("\n**** MENU PRINCIPAL ****");
                                 System.out.println("Consulter Profil        (1)");
                                 System.out.println("Modifier  Profil        (2)");
                                 System.out.println("Ajouter annonce         (3)");
@@ -261,7 +282,9 @@ public class Main {
                                 }
                             }
 
-                        } else {
+                        }
+                        }
+                        else {
                             System.out.println("Email ou mot de passe incorrect !");
                         }
 

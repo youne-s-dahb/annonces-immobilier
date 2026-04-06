@@ -115,7 +115,8 @@ public class compteService {
                                 rs.getString("Prenom"),
                                 rs.getString("Gmail"),
                                 rs.getString("Password"),
-                                rs.getString("Telephone")
+                                rs.getString("Telephone"),
+                                rs.getString("role")
                         );
                     }else{
                         System.out.println("Mot de pass Incorrect !");
