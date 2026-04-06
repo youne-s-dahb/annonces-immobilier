@@ -48,18 +48,19 @@ public class Main {
 
                             int choixAnnonce = 0;
 
-                            while (choixAnnonce != 8) {
+                            while (choixAnnonce != 10) {
 
                                 System.out.println("\n**** MENU ANNONCE ****");
-                                System.out.println("Consulter Profil     (1)");
-                                System.out.println("Modifier  Profil     (2)");
-                                System.out.println("Ajouter annonce      (3)");
-                                System.out.println("Modifier annonce     (4)");
-                                System.out.println("Chercher annonce     (5)");
-                                System.out.println("Consulter Favoris    (6)");
-                                System.out.println("Supprimer Favoris    (7)");
-                                System.out.println("Se Deconnecter       (8)");
-                                System.out.println("Retour menu principal(9)");
+                                System.out.println("Consulter Profil        (1)");
+                                System.out.println("Modifier  Profil        (2)");
+                                System.out.println("Ajouter annonce         (3)");
+                                System.out.println("Modifier annonce        (4)");
+                                System.out.println("Chercher annonce        (5)");
+                                System.out.println("Supprimer annonce       (6)");
+                                System.out.println("Consulter Favoris       (7)");
+                                System.out.println("Supprimer Favoris       (8)");
+                                System.out.println("Arreter le programe     (9)");
+                                System.out.println("Se Deconnecter          (10)");
 
                                 System.out.print("Choix : ");
 
@@ -157,7 +158,23 @@ public class Main {
                                         }
 
                                         break;
-                                    case 6:// -------- Consulter list favorie --------
+
+                                    case 6: //---------Supprimer annonces ----------
+                                        //Supprimer  annonce:
+                                        if(userConncte != null){
+                                            System.out.print("Entrez l'ID de l'annonce à Supprimer: ");
+                                            int idAnnonce = sc.nextInt();
+                                            sc.nextLine(); // consommer le saut de ligne
+
+                                            annonceService.Supprimer_Annonces(idAnnonce);
+                                        }
+                                        else {
+                                            System.out.println("N'est pas Connecter !");
+                                        }
+                                        break;
+
+
+                                    case 7:// -------- Consulter list favorie --------
                                         List<FaavoriesExtendAnnonces> mesFavs = favoriesServices.Consulter_list_favorie(userConncte.getId());
 
                                         if (mesFavs.isEmpty()) {
@@ -182,12 +199,12 @@ public class Main {
                                             }
                                         }
                                         break;
-                                    case 7:// -------- Supprimer favorie  --------
+                                    case 8:// -------- Supprimer favorie  --------
 
                                         System.out.print("Donne moi ID d'annonce que tu peux Supprimer :");
                                         int id=sc.nextInt();
                                         sc.nextLine();
-                                        System.out.print  ("Vous etes sur que tu peux supprimer cette favoris (Y/N) \uD83D\uDDD1\uFE0F :");
+                                        System.out.print  ("Vous etes sur que vous voulez supprimer cette favoris (Y/N) \uD83D\uDDD1\uFE0F :");
                                         String y_n=sc.nextLine().toLowerCase();
                                         char x = y_n.charAt(0);
                                         if(x=='y'){
@@ -200,25 +217,28 @@ public class Main {
                                         }
                                         break;
 
-                                    case 8://Deconnecter
+                                    case 9://Deconnecter
                                         System.out.print("Vous etes sur ? (Y/N) : ");
                                         String input = sc.nextLine().toLowerCase();
                                         x = input.charAt(0);
                                         if (x == 'y') {
                                             System.out.println("Au revoir !!!");
-                                            choixAnnonce = 8; // Force sortie de la boucle des annonces
+                                            choixAnnonce = 10; // Force sortie de la boucle des annonces
                                             userConncte = null; // Déconnexion
                                         } else if (x == 'n') {
                                             System.out.println("Vous restez connecté.");
+                                            choixAnnonce = 0;
                                             // rien à faire, reste dans la boucle
                                         } else {
                                             System.out.println("Vous devez choisir soit (Y/N)");
                                         }
                                         break;
 
-                                    case 9://retour menu principal
-                                        System.out.println("Retour menu principal...");
-                                        choixAnnonce = 8; //force la sortie de la boucle des annonces
+                                    case 10://retour menu principal
+                                        System.out.println("Au revoir !!!");
+                                        choix = 0;
+                                        userConncte = null; // Déconnexion
+
                                         break;
 
                                     default:

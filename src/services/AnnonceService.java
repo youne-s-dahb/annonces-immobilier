@@ -213,7 +213,7 @@ public class AnnonceService implements annonce{
 
     //Supprimer annonces
     public void  Supprimer_Annonces(int id_annonce){
-        String Sql="DELETE FROM annonces where id_annonce= ?";
+        String Sql="DELETE FROM annonce where id_annonce= ?";
         try(Connection conn = DBConnection.getConnection();
             PreparedStatement stmt=conn.prepareStatement(Sql))
         {
