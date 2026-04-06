@@ -152,13 +152,14 @@ public class compteService {
                     ResultSet res=stmt.executeQuery();
                     System.out.println("\n--- VOS ANNONCES ---");
                     while (res.next()){
-
+                        int id=res.getInt("id_annonce");
                         String titre =     res.getString("titre");
                         String description = res.getString("description");
                         String type = res.getString("type");
                         String telephone = res.getString("telephone");
                         Timestamp date = res.getTimestamp("date_publication");
 
+                        System.out.println("ID               : " + id);
                         System.out.println("Titre            : " + titre);
                         System.out.println("Description      : " + description);
                         System.out.println("Type             : " + type);
@@ -255,7 +256,7 @@ public class compteService {
 
             //Regex:
             String titreRegex = "^[A-Za-z0-9 ]{4,}$";
-            String descRegex = "^[A-Za-z]{10,}$";
+            String descRegex = "^.{10,}$";
             String telephoneRegex="^[0][5-7][0-9]{8}$";
             String typeRegex = "(?i)^(vente|location)$"; //(?i): ignore majuscule/miniscule
 
@@ -289,8 +290,7 @@ public class compteService {
             System.out.print("Choisir le type de votre annonce(Vente/Location): ");
             String type = sc.nextLine();
             while(!type.matches(typeRegex)){
-                System.out.println("Vous devez choisir (Vente/Location)!");
-                System.out.print("Choisir le type de votre annonce(Vente/Location): ");
+                System.out.print("Vous devez choisir (Vente/Location) :");
                 type = sc.nextLine();
             }
             //Prix
