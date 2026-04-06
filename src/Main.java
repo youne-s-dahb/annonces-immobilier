@@ -36,14 +36,29 @@ public class Main {
 
                     case 2://Login+AjouterAnnonces+ChercherAnoonces+AjouterAnnoncesAuFavorie
 
-                        System.out.println("***********************Login********************************");
-                        System.out.print("Saisi votre gmail :");
-                        String gmail = sc.nextLine();
-                        System.out.print("Saisi votre password :");
-                        String password = sc.nextLine();
-                        userConncte = service.Login(gmail, password); // Hna kn39lo  3LA l-user li rje3 men l-Login
-                        if (userConncte != null) {
+                        boolean loginReussi=false;
+                        while (!loginReussi){
+                            try{
 
+                                System.out.println("***********************Login********************************");
+                                System.out.print("Saisi votre gmail :");
+                                String gmail = sc.nextLine();
+
+                                System.out.print("Saisi votre password :");
+                                String password = sc.nextLine();
+                                userConncte = service.Login(gmail, password); // Hna kn39lo  3LA l-user li rje3 men l-Login
+                                if(userConncte!=null){
+                                    loginReussi=true;
+                                }
+
+                            }
+                            catch (Exception e){
+                                System.out.println("il y'a un error :"+ e.getMessage());
+                            }
+                        }
+
+
+                        if (userConncte != null) {
                             System.out.println("Connexion réussie !");
 
                             int choixAnnonce = 0;
