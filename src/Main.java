@@ -22,16 +22,16 @@ public class Main {
         while (choix != 2) {
             try{
                 System.out.println("************************* MENU de connexion ********************************************");
-                System.out.println("Créer un compte    (1)");
+                System.out.println("Creer un compte    (1)");
                 System.out.println("Se Connecter       (2)");
-                System.out.print("Saisir votre choix  :");
+                System.out.print("saisir votre choix  :");
 
                 choix = sc.nextInt();
                 sc.nextLine();
 
                 switch (choix) {
                     case 1://feha Register_User
-                        System.out.println("***********************Enregistrer l'utilisateur********************************");
+                        System.out.println("***********************Enregistrer utilisateur********************************");
                         service.Register_User(sc);//Register_User
                         System.out.println("********************************************************************");
                         break;
@@ -46,7 +46,7 @@ public class Main {
                                 System.out.print("Saisir votre gmail :");
                                 String gmail = sc.nextLine();
 
-                                System.out.print("Saisir votre mot de passe :");
+                                System.out.print("Saisir votre password :");
                                 String password = sc.nextLine();
                                 userConncte = service.Login(gmail, password); // Hna kn39lo  3LA l-user li rje3 men l-Login
                                 if(userConncte!=null){
@@ -66,15 +66,12 @@ public class Main {
                                 int choixAdmin =0;
 
                                 while(choixAdmin!=9){
-                                    System.out.println("Liste de tous les utilisateurs          (1)");
-                                    System.out.println("Liste de toutes les annonces            (2)");
-                                    System.out.println("Supprimer un utilisateur                (3)");
-                                    System.out.println("Chercher une annonce                    (4)");
-                                    System.out.println("Supprimer une annonce                   (5)");
-                                    System.out.println("Consulter Favoris                       (6)");
-                                    System.out.println("Supprimer Favoris                       (7)");
-                                    System.out.println("Arreter le programme                    (8)");
-                                    System.out.println("Se Deconnecter                          (9)");
+                                    System.out.println("Liste de tous les utilisateurs   (1)");
+                                    System.out.println("Liste de toutes les annonces     (2)");
+                                    System.out.println("Chercher annonce                 (3)");
+                                    System.out.println("Consulter Favoris                (4)");
+                                    System.out.println("Arreter le programe              (5)");
+                                    System.out.println("Se Deconnecter                   (6)");
                                     System.out.print("Choix : ");
                                     choixAdmin=sc.nextInt();
                                     sc.nextLine();
@@ -84,14 +81,15 @@ public class Main {
                                                 System.out.println("IL y'a "+nombreUser+" utilisateurs Dans Notre Systeme ");
                                                 adminService.ListUser();//function ListUser
                                                 int ChoixAn =0;
-                                                while(ChoixAn!=2){
-                                                    System.out.println("Consulter Annonce d'un utilisateur (1) :");
-                                                    System.out.println("Supprimer un utilisateur         (2) :");
+                                                while(ChoixAn!=3){
+                                                    System.out.println("Consulter Annonce d'un utilisateur  (1) :");
+                                                    System.out.println("Supprimer un utilisateur            (2) :");
+                                                    System.out.println("Retour au menu principale           (3) :");
                                                     System.out.print("Entrer Votre choix :");
                                                     ChoixAn=sc.nextInt();
                                                     switch (ChoixAn){
                                                         case 1:
-                                                            System.out.print("Saisi Id pour Consulter les Annonces :");
+                                                            System.out.print("Saisir Id pour Consulter les Annonces :");
                                                             int Id_ann=sc.nextInt();
                                                             // 1. Kan-akhdou l'objet li rje3 men l-methode
                                                             List<Annonces> listeAnn = annonceService.consulter_toutes_annonces_user(Id_ann);
@@ -113,7 +111,7 @@ public class Main {
                                                                 }
                                                             }else {
                                                                 // Ila kant l-methode rej3at null (Id ma-kayench)
-                                                                System.out.println("⚠️ Erreur : Aucune annonce trouvée avec cet ID " + Id_ann);
+                                                                System.out.println("⚠️ Erreur : Aucune annonce trouvée avec l'ID " + Id_ann);
                                                             }
                                                             break;
                                                         case 2:
@@ -124,19 +122,29 @@ public class Main {
                                                                 System.out.println("❌ Erreur : Vous ne pouvez pas supprimer votre propre compte administrateur !");
                                                             }
                                                             else{
-                                                                System.out.print("☣️ Ecrire 'supprimerUser' pour la Suppression : ");
+                                                                System.out.print("☣️ Ecrire 'supprimerUser' pour Suppression : ");
                                                                 String validerSuppression=sc.nextLine();
                                                                 if(validerSuppression.equals("supprimerUser")){
                                                                     adminService.SupprimerUser(supp);
                                                                 }else{
-                                                                    System.out.println("Aucun utilisateur Supprimer  ");
+                                                                    System.out.println("Aucun user Supprimer  ");
                                                                 }
                                                             }
+                                                            break;
 
+                                                        case 3:
+                                                            choixAdmin =0;
                                                             break;
                                                     }
                                                 }
                                                 break;
+                                        case 2:
+                                            int nombreAnnonces=adminService.CountAnnonces();//function CountUser
+                                            System.out.println("IL y'a "+nombreAnnonces+" annonces Dans Notre Systeme ");
+                                            adminService.ListAnnonce();
+
+                                            break;
+
                                             case 9://Deconnecter
                                                 System.out.print("Vous etes sur ? (Y/N) : ");
                                                 String input = sc.nextLine().toLowerCase();
@@ -146,7 +154,7 @@ public class Main {
                                                     choixAdmin = 10; // Force sortie de la boucle des annonces
                                                     userConncte = null; // Déconnexion
                                                 } else if (x == 'n') {
-                                                    System.out.println("Vous restez connecté.");
+                                                    System.out.println("Vous étes encore connecté.");
                                                     choixAdmin = 0;
                                                     // rien à faire, reste dans la boucle
                                                 } else {
@@ -176,7 +184,7 @@ public class Main {
 
                             while (choixAnnonce != 10) {
 
-                                System.out.println("\n**** MENU PRINCIPAL (Admin) ****");
+                                System.out.println("\n**** MENU PRINCIPAL ****");
                                 System.out.println("Consulter Profil        (1)");
                                 System.out.println("Modifier  Profil        (2)");
                                 System.out.println("Ajouter annonce         (3)");
@@ -270,7 +278,7 @@ public class Main {
                                             sc.nextLine(); // bach n-khwiw l-buffer
 
                                             if (optionFav == 1) {
-                                                System.out.print("Saisi l'ID de l'annonce : ");
+                                                System.out.print("Saisir l'ID de l'annonce : ");
                                                 int idAnnonceKhtara = sc.nextInt();
                                                 sc.nextLine();
 
@@ -304,7 +312,7 @@ public class Main {
                                         List<FaavoriesExtendAnnonces> mesFavs = favoriesServices.Consulter_list_favorie(userConncte.getId());
 
                                         if (mesFavs.isEmpty()) {
-                                            System.out.println("IL n'ya aucun favorie !");
+                                            System.out.println("IL n'ya aucn favoris !");
                                         } else {
                                             // Formatage dyal l-waqt
                                             java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -327,7 +335,7 @@ public class Main {
                                         break;
                                     case 8:// -------- Supprimer favorie  --------
 
-                                        System.out.print("Saisir ID d'annonce que vous voulez Supprimer :");
+                                        System.out.print("Donne moi ID de l'annonce que vous voulez Supprimer :");
                                         int id=sc.nextInt();
                                         sc.nextLine();
                                         System.out.print  ("Vous etes sur que vous voulez supprimer cette favoris (Y/N) \uD83D\uDDD1\uFE0F :");
@@ -388,12 +396,10 @@ public class Main {
                 System.out.println("********************************************************************");
             }
             catch (InputMismatchException e) {
-                System.out.println("❌ Erreur: Donne moi un numero valide !");
+                System.out.println("❌ Erreur: Saisir un numero valide !");
                 sc.nextLine();
                 continue; // Bach t-rje3 l l-bdya d l-loop bla ma t-kemmel l-switch
             };
-
-
 
 
         };
