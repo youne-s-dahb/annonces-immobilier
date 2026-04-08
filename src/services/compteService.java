@@ -250,7 +250,7 @@ public class compteService {
                 System.out.println("Aucune modification effectuée ! ");
             }
         } catch (SQLException e) {
-            System.out.println("Error SQL: " + e.getMessage());
+            System.out.println("Impossible de modifier ce profil. Veuillez réessayer plus tard! ");
         }
     }
 

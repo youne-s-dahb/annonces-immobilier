@@ -22,16 +22,16 @@ public class Main {
         while (choix != 2) {
             try{
                 System.out.println("************************* MENU de connexion ********************************************");
-                System.out.println("Creer un compte    (1)");
+                System.out.println("Créer un compte    (1)");
                 System.out.println("Se Connecter       (2)");
-                System.out.print("saisi votre choix  :");
+                System.out.print("Saisir votre choix  :");
 
                 choix = sc.nextInt();
                 sc.nextLine();
 
                 switch (choix) {
                     case 1://feha Register_User
-                        System.out.println("***********************Register User********************************");
+                        System.out.println("***********************Enregistrer l'utilisateur********************************");
                         service.Register_User(sc);//Register_User
                         System.out.println("********************************************************************");
                         break;
@@ -43,10 +43,10 @@ public class Main {
                             try{
 
                                 System.out.println("***********************Login********************************");
-                                System.out.print("Saisi votre gmail :");
+                                System.out.print("Saisir votre gmail :");
                                 String gmail = sc.nextLine();
 
-                                System.out.print("Saisi votre password :");
+                                System.out.print("Saisir votre mot de passe :");
                                 String password = sc.nextLine();
                                 userConncte = service.Login(gmail, password); // Hna kn39lo  3LA l-user li rje3 men l-Login
                                 if(userConncte!=null){
@@ -55,7 +55,7 @@ public class Main {
 
                             }
                             catch (Exception e){
-                                System.out.println("il y'a un error :"+ e.getMessage());
+                                System.out.println("Erreur lors de la connection. Veuillez réessayer plus tard!");
                             }
                         }
                         if (userConncte != null) {
@@ -66,32 +66,32 @@ public class Main {
                                 int choixAdmin =0;
 
                                 while(choixAdmin!=9){
-                                    System.out.println("LISTE DE TOUS  LES USERS         (1)");
-                                    System.out.println("LISTE DE TOUS  LES ANNONCES      (2)");
-                                    System.out.println("Supprimer un User                (3)");
-                                    System.out.println("Chercher annonce                 (4)");
-                                    System.out.println("Supprimer annonce                (5)");
-                                    System.out.println("Consulter Favoris                (6)");
-                                    System.out.println("Supprimer Favoris                (7)");
-                                    System.out.println("Arreter le programe              (8)");
-                                    System.out.println("Se Deconnecter                   (9)");
+                                    System.out.println("Liste de tous les utilisateurs          (1)");
+                                    System.out.println("Liste de toutes les annonces            (2)");
+                                    System.out.println("Supprimer un utilisateur                (3)");
+                                    System.out.println("Chercher une annonce                    (4)");
+                                    System.out.println("Supprimer une annonce                   (5)");
+                                    System.out.println("Consulter Favoris                       (6)");
+                                    System.out.println("Supprimer Favoris                       (7)");
+                                    System.out.println("Arreter le programme                    (8)");
+                                    System.out.println("Se Deconnecter                          (9)");
                                     System.out.print("Choix : ");
                                     choixAdmin=sc.nextInt();
                                     sc.nextLine();
                                     switch (choixAdmin){
                                             case 1:
                                                 int nombreUser=adminService.CountUser();//function CountUser
-                                                System.out.println("IL y'a "+nombreUser+" Users Dans Notre Systeme ");
+                                                System.out.println("IL y'a "+nombreUser+" utilisateurs Dans Notre Systeme ");
                                                 adminService.ListUser();//function ListUser
                                                 int ChoixAn =0;
                                                 while(ChoixAn!=2){
-                                                    System.out.println("Consulter Annonce User (1) :");
-                                                    System.out.println("Supprimer User         (2) :");
+                                                    System.out.println("Consulter Annonce d'un utilisateur (1) :");
+                                                    System.out.println("Supprimer un utilisateur         (2) :");
                                                     System.out.print("Entrer Votre choix :");
                                                     ChoixAn=sc.nextInt();
                                                     switch (ChoixAn){
                                                         case 1:
-                                                            System.out.print("Saisi Id pour Consulter Annonces :");
+                                                            System.out.print("Saisi Id pour Consulter les Annonces :");
                                                             int Id_ann=sc.nextInt();
                                                             // 1. Kan-akhdou l'objet li rje3 men l-methode
                                                             List<Annonces> listeAnn = annonceService.consulter_toutes_annonces_user(Id_ann);
@@ -113,26 +113,25 @@ public class Main {
                                                                 }
                                                             }else {
                                                                 // Ila kant l-methode rej3at null (Id ma-kayench)
-                                                                System.out.println("⚠️ Erreur : Aucune annonce trouvée avec l'ID " + Id_ann);
+                                                                System.out.println("⚠️ Erreur : Aucune annonce trouvée avec cet ID " + Id_ann);
                                                             }
                                                             break;
                                                         case 2:
-                                                            System.out.print("Saisi Id de user pour Supprimer :");
+                                                            System.out.print("Saisir Id de l'utilisateur pour Supprimer :");
                                                             int supp=sc.nextInt();
                                                             sc.nextLine();
                                                             if(userConncte.getId()==supp){
                                                                 System.out.println("❌ Erreur : Vous ne pouvez pas supprimer votre propre compte administrateur !");
                                                             }
                                                             else{
-                                                                System.out.print("☣️ Ecrire 'supprimerUser' pour Suppression : ");
+                                                                System.out.print("☣️ Ecrire 'supprimerUser' pour la Suppression : ");
                                                                 String validerSuppression=sc.nextLine();
                                                                 if(validerSuppression.equals("supprimerUser")){
                                                                     adminService.SupprimerUser(supp);
                                                                 }else{
-                                                                    System.out.println("Aucun user Supprimer  ");
+                                                                    System.out.println("Aucun utilisateur Supprimer  ");
                                                                 }
                                                             }
-
 
                                                             break;
                                                     }
@@ -177,7 +176,7 @@ public class Main {
 
                             while (choixAnnonce != 10) {
 
-                                System.out.println("\n**** MENU PRINCIPAL ****");
+                                System.out.println("\n**** MENU PRINCIPAL (Admin) ****");
                                 System.out.println("Consulter Profil        (1)");
                                 System.out.println("Modifier  Profil        (2)");
                                 System.out.println("Ajouter annonce         (3)");
@@ -305,7 +304,7 @@ public class Main {
                                         List<FaavoriesExtendAnnonces> mesFavs = favoriesServices.Consulter_list_favorie(userConncte.getId());
 
                                         if (mesFavs.isEmpty()) {
-                                            System.out.println("IL n'ya aucn favoris !");
+                                            System.out.println("IL n'ya aucun favorie !");
                                         } else {
                                             // Formatage dyal l-waqt
                                             java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -314,7 +313,7 @@ public class Main {
                                                 String dateStr = sdf.format(f.getDateAjoutFav()); // Smiya d l-getter li derti f l-Model
 
                                                 System.out.println("====================================");
-                                                System.out.println("ID                                      : " + f.getIdFavorie());
+                                                System.out.println("ID                                      : " + f.getId_annonce());
                                                 System.out.println("Titre                                   : " + f.getTitre());
                                                 System.out.println("Description                             : " + f.getDescription());
                                                 System.out.println("Ajouté le                               : " + dateStr); // Ghadi t-ban b s-sway3 w d-dqayq
@@ -328,7 +327,7 @@ public class Main {
                                         break;
                                     case 8:// -------- Supprimer favorie  --------
 
-                                        System.out.print("Donne moi ID d'annonce que tu peux Supprimer :");
+                                        System.out.print("Saisir ID d'annonce que vous voulez Supprimer :");
                                         int id=sc.nextInt();
                                         sc.nextLine();
                                         System.out.print  ("Vous etes sur que vous voulez supprimer cette favoris (Y/N) \uD83D\uDDD1\uFE0F :");
