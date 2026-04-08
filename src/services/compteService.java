@@ -46,8 +46,34 @@ public class compteService {
                     System.out.print("Saisir votre adresse email :");
                     gmail=sc.nextLine();
                 }
+
+            String sqlG = "SELECT COUNT(*) FROM user WHERE Gmail = ?";
+            try (Connection conn = DBConnection.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(sqlG)){
+
+                boolean emailExist = true;
+                while(emailExist) {
+                    stmt.setString(1, gmail);
+                    ResultSet res = stmt.executeQuery();
+
+                    if(res.next()){
+                        int count = res.getInt(1);
+                        if(count > 0){
+                            System.out.print("Email deja existant, veuillez saisir à nouveau: ");
+                            gmail=sc.nextLine();
+                        }else{
+                            emailExist = false;
+                        }
+
+                    }
+                }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+
                 //---------- PASSWORD ----------
-                System.out.print("Saisir votre password :");
+                System.out.print("Saisir votre mot de passe :");
                 String password=sc.nextLine();
                 while(!password.matches(passwordRegex)){
                     System.out.println("Error: Invalid password. Example: Wx1@Abcd");
@@ -91,7 +117,7 @@ public class compteService {
                     if(e.getErrorCode()==1062){ //1062 = Duplicate key ya3ni email deja exist
                         System.out.println("Email est deja existant ! ");
                     }else{
-                        System.out.println("Error dans db "+e.getMessage());
+                        System.out.println("Error dans db ");
                     }
                 }
             }

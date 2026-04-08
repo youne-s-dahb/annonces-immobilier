@@ -73,6 +73,13 @@ public class Main {
                                     System.out.println("Arreter le programe              (5)");
                                     System.out.println("Se Deconnecter                   (6)");
                                     System.out.print("Choix : ");
+
+                                    while (!sc.hasNextInt()) { // ma7ed input machi ra9m / hasNextInt = check if int
+                                        System.out.println("Vous devez saisir un chiffre!!");
+                                        System.out.print("Saisir votre choix: ");
+                                        sc.next();
+                                    }
+
                                     choixAdmin=sc.nextInt();
                                     sc.nextLine();
                                     switch (choixAdmin){
@@ -86,10 +93,23 @@ public class Main {
                                                     System.out.println("Supprimer un utilisateur            (2) :");
                                                     System.out.println("Retour au menu principale           (3) :");
                                                     System.out.print("Entrer Votre choix :");
+
+                                                    while (!sc.hasNextInt()) { // ma7ed input machi r9m
+                                                        System.out.println("Vous devez saisir un chiffre!!");
+                                                        System.out.print("Saisir votre choix: ");
+                                                        sc.next();
+                                                    }
                                                     ChoixAn=sc.nextInt();
                                                     switch (ChoixAn){
                                                         case 1:
                                                             System.out.print("Saisir Id pour Consulter les Annonces :");
+
+                                                            while (!sc.hasNextInt()) { // ma7ed input machi r9m
+                                                                System.out.println("Vous devez saisir un chiffre!!");
+                                                                System.out.print("Saisir votre choix: ");
+                                                                sc.next();
+                                                            }
+
                                                             int Id_ann=sc.nextInt();
                                                             // 1. Kan-akhdou l'objet li rje3 men l-methode
                                                             List<Annonces> listeAnn = annonceService.consulter_toutes_annonces_user(Id_ann);
@@ -116,8 +136,16 @@ public class Main {
                                                             break;
                                                         case 2:
                                                             System.out.print("Saisir Id de l'utilisateur pour Supprimer :");
+
+                                                            while (!sc.hasNextInt()) { // ma7ed input machi r9m
+                                                                System.out.println("Vous devez saisir un chiffre!!");
+                                                                System.out.print("Saisir votre choix: ");
+                                                                sc.next();
+                                                            }
+
                                                             int supp=sc.nextInt();
                                                             sc.nextLine();
+
                                                             if(userConncte.getId()==supp){
                                                                 System.out.println("❌ Erreur : Vous ne pouvez pas supprimer votre propre compte administrateur !");
                                                             }
@@ -130,6 +158,7 @@ public class Main {
                                                                     System.out.println("Aucun user Supprimer  ");
                                                                 }
                                                             }
+
                                                             break;
 
                                                         case 3:
@@ -237,6 +266,13 @@ public class Main {
                                         //Modifier annonce:
                                         if(userConncte != null){
                                             System.out.print("Entrez l'ID de l'annonce à modifier: ");
+
+                                            while (!sc.hasNextInt()) { // ma7ed input machi r9m
+                                                System.out.println("Vous devez saisir un chiffre!!");
+                                                System.out.print("Saisir votre choix: ");
+                                                sc.next();
+                                            }
+
                                             int idAnnonce = sc.nextInt();
                                             sc.nextLine(); // consommer le saut de ligne
 
@@ -279,6 +315,13 @@ public class Main {
 
                                             if (optionFav == 1) {
                                                 System.out.print("Saisir l'ID de l'annonce : ");
+
+                                                while (!sc.hasNextInt()) { // ma7ed input machi r9m
+                                                    System.out.println("Vous devez saisir un chiffre!!");
+                                                    System.out.print("Saisir votre choix: ");
+                                                    sc.next();
+                                                }
+
                                                 int idAnnonceKhtara = sc.nextInt();
                                                 sc.nextLine();
 
@@ -297,6 +340,13 @@ public class Main {
                                         //Supprimer  annonce:
                                         if(userConncte != null){
                                             System.out.print("Entrez l'ID de l'annonce à Supprimer: ");
+
+                                            while (!sc.hasNextInt()) { // ma7ed input machi r9m
+                                                System.out.println("Vous devez saisir un chiffre!!");
+                                                System.out.print("Saisir votre choix: ");
+                                                sc.next();
+                                            }
+
                                             int idAnnonce = sc.nextInt();
                                             sc.nextLine(); // consommer le saut de ligne
 
@@ -312,7 +362,7 @@ public class Main {
                                         List<FaavoriesExtendAnnonces> mesFavs = favoriesServices.Consulter_list_favorie(userConncte.getId());
 
                                         if (mesFavs.isEmpty()) {
-                                            System.out.println("IL n'ya aucn favoris !");
+                                            System.out.println("IL n'ya aucune favorie !");
                                         } else {
                                             // Formatage dyal l-waqt
                                             java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -336,6 +386,13 @@ public class Main {
                                     case 8:// -------- Supprimer favorie  --------
 
                                         System.out.print("Donne moi ID de l'annonce que vous voulez Supprimer :");
+
+                                        while (!sc.hasNextInt()) { // ma7ed input machi r9m
+                                            System.out.println("Vous devez saisir un chiffre!!");
+                                            System.out.print("Saisir votre choix: ");
+                                            sc.next();
+                                        }
+
                                         int id=sc.nextInt();
                                         sc.nextLine();
                                         System.out.print  ("Vous etes sur que vous voulez supprimer cette favoris (Y/N) \uD83D\uDDD1\uFE0F :");
