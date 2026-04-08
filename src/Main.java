@@ -3,6 +3,7 @@ import java.util.*;
 import model.Annonces;
 import model.FaavoriesExtendAnnonces;
 import model.User;
+import services.AdminService;
 import services.AnnonceService;
 import services.FavoriesServices;
 import services.compteService;
@@ -13,6 +14,7 @@ public class Main {
         compteService service = new compteService();
         AnnonceService annonceService=new AnnonceService();
         FavoriesServices favoriesServices=new FavoriesServices();
+        AdminService adminService=new AdminService();
 
         Scanner sc=new Scanner(System.in);
         User userConncte= null;
@@ -56,32 +58,121 @@ public class Main {
                                 System.out.println("il y'a un error :"+ e.getMessage());
                             }
                         }
-
-
                         if (userConncte != null) {
 
                             if(userConncte.getRole().equals("Admin")){
+
                                 System.out.println("\n**** MENU ADMIN ****");
+                                int choixAdmin =0;
 
-                                System.out.println("LISTE DE TOUS  LES USERS         (1)");
-                                System.out.println("LISTE DE TOUS  LES ANNONCES      (2)");
-                                System.out.println("Supprimer un User                (3)");
-                                System.out.println("Chercher annonce                 (4)");
-                                System.out.println("Supprimer annonce                (5)");
-                                System.out.println("Consulter Favoris                (6)");
-                                System.out.println("Supprimer Favoris                (7)");
-                                System.out.println("Arreter le programe              (8)");
-                                System.out.println("Se Deconnecter                   (9)");
+                                while(choixAdmin!=9){
+                                    System.out.println("LISTE DE TOUS  LES USERS         (1)");
+                                    System.out.println("LISTE DE TOUS  LES ANNONCES      (2)");
+                                    System.out.println("Supprimer un User                (3)");
+                                    System.out.println("Chercher annonce                 (4)");
+                                    System.out.println("Supprimer annonce                (5)");
+                                    System.out.println("Consulter Favoris                (6)");
+                                    System.out.println("Supprimer Favoris                (7)");
+                                    System.out.println("Arreter le programe              (8)");
+                                    System.out.println("Se Deconnecter                   (9)");
+                                    System.out.print("Choix : ");
+                                    choixAdmin=sc.nextInt();
+                                    sc.nextLine();
+                                    switch (choixAdmin){
+                                            case 1:
+                                                int nombreUser=adminService.CountUser();//function CountUser
+                                                System.out.println("IL y'a "+nombreUser+" Users Dans Notre Systeme ");
+                                                adminService.ListUser();//function ListUser
+                                                int ChoixAn =0;
+                                                while(ChoixAn!=2){
+                                                    System.out.println("Consulter Annonce User (1) :");
+                                                    System.out.println("Supprimer User         (2) :");
+                                                    System.out.print("Entrer Votre choix :");
+                                                    ChoixAn=sc.nextInt();
+                                                    switch (ChoixAn){
+                                                        case 1:
+                                                            System.out.print("Saisi Id pour Consulter Annonces :");
+                                                            int Id_ann=sc.nextInt();
+                                                            // 1. Kan-akhdou l'objet li rje3 men l-methode
+                                                            List<Annonces> listeAnn = annonceService.consulter_toutes_annonces_user(Id_ann);
 
-                                System.out.print("Choix : ");
+                                                            // 2. Kan-t-checkiw wach l9ah (machi null)
+                                                            if (listeAnn != null && !listeAnn.isEmpty()) {
+                                                                System.out.println("\n--- ✨ Détails de l'Annonce ---");
+                                                                for (Annonces a : listeAnn) {
 
-                                int choixAdmin = sc.nextInt();
-                                sc.nextLine();
+                                                                    System.out.println("Titre                  : " + a.getTitre());
+                                                                    System.out.println("Description            : " + a.getDescription());
+                                                                    System.out.println("Prix                   : " + a.getPrix() + " DH");
+                                                                    System.out.println("Type                   : " + a.getType());
+                                                                    System.out.println("Telephone              : " + a.getTelephone());
+                                                                    System.out.println("Ville                  : " + a.getIdVille());
+                                                                    System.out.println("Date Publication       : " + a.getDate_publication());
+                                                                    System.out.println("------------------------------------\n");
+
+                                                                }
+                                                            }else {
+                                                                // Ila kant l-methode rej3at null (Id ma-kayench)
+                                                                System.out.println("⚠️ Erreur : Aucune annonce trouvée avec l'ID " + Id_ann);
+                                                            }
+                                                            break;
+                                                        case 2:
+                                                            System.out.print("Saisi Id de user pour Supprimer :");
+                                                            int supp=sc.nextInt();
+                                                            sc.nextLine();
+                                                            if(userConncte.getId()==supp){
+                                                                System.out.println("❌ Erreur : Vous ne pouvez pas supprimer votre propre compte administrateur !");
+                                                            }
+                                                            else{
+                                                                System.out.print("☣️ Ecrire 'supprimerUser' pour Suppression : ");
+                                                                String validerSuppression=sc.nextLine();
+                                                                if(validerSuppression.equals("supprimerUser")){
+                                                                    adminService.SupprimerUser(supp);
+                                                                }else{
+                                                                    System.out.println("Aucun user Supprimer  ");
+                                                                }
+                                                            }
+
+
+                                                            break;
+                                                    }
+                                                }
+                                                break;
+                                            case 9://Deconnecter
+                                                System.out.print("Vous etes sur ? (Y/N) : ");
+                                                String input = sc.nextLine().toLowerCase();
+                                                int x = input.charAt(0);
+                                                if (x == 'y') {
+                                                    System.out.println("Au revoir !!!");
+                                                    choixAdmin = 10; // Force sortie de la boucle des annonces
+                                                    userConncte = null; // Déconnexion
+                                                } else if (x == 'n') {
+                                                    System.out.println("Vous restez connecté.");
+                                                    choixAdmin = 0;
+                                                    // rien à faire, reste dans la boucle
+                                                } else {
+                                                    System.out.println("Vous devez choisir soit (Y/N)");
+                                                }
+                                                break;
+
+                                            case 10://retour menu principal
+                                                System.out.println("Au revoir !!!");
+                                                choix = 0;
+                                                userConncte = null; // Déconnexion
+
+                                                break;
+
+                                            default:
+                                                System.out.println("Choix invalide !");
+                                        }
+                                }
+
                             }else{
 
 
                             System.out.println("Connexion réussie !");
 
+                            //_______________________________________________________________________________________________
                             int choixAnnonce = 0;
 
                             while (choixAnnonce != 10) {

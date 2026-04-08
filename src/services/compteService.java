@@ -138,14 +138,14 @@ public class compteService {
         public void consulterProfil(User user) {
 
             if (user != null) {
-                boolean hasAnnonces =true;
+
                 System.out.println("\n--- VOTRE PROFIL ---");
                 System.out.println("Nom      : " + user.getNom());
                 System.out.println("Prenom   : " + user.getPrenom());
                 System.out.println("Email    : " + user.getGmail());
                 System.out.println("Telephone: " + user.getTelephone());
                 System.out.println("--------------------\n");
-
+                boolean hasAnnonces =false;
                 String sql="Select a.*,u.* from annonce a INNER JOIN user u ON a.id_user=u.id_user where a.id_user = ?";
                 try(PreparedStatement stmt=con.prepareStatement(sql)){
 
@@ -153,6 +153,7 @@ public class compteService {
                     ResultSet res=stmt.executeQuery();
                     System.out.println("\n--- VOS ANNONCES ---");
                     while (res.next()){
+                        hasAnnonces=true;
                         int id=res.getInt("id_annonce");
                         String titre =     res.getString("titre");
                         String description = res.getString("description");
