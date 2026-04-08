@@ -10,7 +10,7 @@ public interface annonce {
     public List<Annonces> filtrer_annonce(String type, double prixMin, double prixMax);
 
     // Kat-khlina n-choufo l-detail dyal annonce wa7da b-l'id dyalha
-    public Annonces consulter_annonce(int id_annonce);
+    public List<Annonces> consulter_toutes_annonces_user(int id_user);
 
     // Kat-bhét b-l-kalimat l-mifta7iya (keyword) f l-cinwan aw l-wasf
     public List<Annonces> chercher_annonce(String search);
