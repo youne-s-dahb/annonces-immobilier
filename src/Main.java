@@ -24,14 +24,14 @@ public class Main {
                 System.out.println("************************* MENU de connexion ********************************************");
                 System.out.println("Creer un compte    (1)");
                 System.out.println("Se Connecter       (2)");
-                System.out.print("saisi votre choix  :");
+                System.out.print("saisir votre choix  :");
 
                 choix = sc.nextInt();
                 sc.nextLine();
 
                 switch (choix) {
                     case 1://feha Register_User
-                        System.out.println("***********************Register User********************************");
+                        System.out.println("***********************Enregistrer utilisateur********************************");
                         service.Register_User(sc);//Register_User
                         System.out.println("********************************************************************");
                         break;
@@ -43,10 +43,10 @@ public class Main {
                             try{
 
                                 System.out.println("***********************Login********************************");
-                                System.out.print("Saisi votre gmail :");
+                                System.out.print("Saisir votre gmail :");
                                 String gmail = sc.nextLine();
 
-                                System.out.print("Saisi votre password :");
+                                System.out.print("Saisir votre password :");
                                 String password = sc.nextLine();
                                 userConncte = service.Login(gmail, password); // Hna kn39lo  3LA l-user li rje3 men l-Login
                                 if(userConncte!=null){
@@ -55,7 +55,7 @@ public class Main {
 
                             }
                             catch (Exception e){
-                                System.out.println("il y'a un error :"+ e.getMessage());
+                                System.out.println("Erreur lors de la connection. Veuillez réessayer plus tard!");
                             }
                         }
                         if (userConncte != null) {
@@ -66,8 +66,8 @@ public class Main {
                                 int choixAdmin =0;
 
                                 while(choixAdmin!=9){
-                                    System.out.println("LISTE DE TOUS  LES USERS         (1)");
-                                    System.out.println("LISTE DE TOUS  LES ANNONCES      (2)");
+                                    System.out.println("Liste de tous les utilisateurs   (1)");
+                                    System.out.println("Liste de toutes les annonces     (2)");
                                     System.out.println("Chercher annonce                 (3)");
                                     System.out.println("Consulter Favoris                (4)");
                                     System.out.println("Arreter le programe              (5)");
@@ -78,17 +78,18 @@ public class Main {
                                     switch (choixAdmin){
                                             case 1:
                                                 int nombreUser=adminService.CountUser();//function CountUser
-                                                System.out.println("IL y'a "+nombreUser+" Users Dans Notre Systeme ");
+                                                System.out.println("IL y'a "+nombreUser+" utilisateurs Dans Notre Systeme ");
                                                 adminService.ListUser();//function ListUser
                                                 int ChoixAn =0;
                                                 while(ChoixAn!=3){
-                                                    System.out.println("Consulter Annonce User (1) :");
-                                                    System.out.println("Supprimer User         (2) :");
+                                                    System.out.println("Consulter Annonce d'un utilisateur  (1) :");
+                                                    System.out.println("Supprimer un utilisateur            (2) :");
+                                                    System.out.println("Retour au menu principale           (3) :");
                                                     System.out.print("Entrer Votre choix :");
                                                     ChoixAn=sc.nextInt();
                                                     switch (ChoixAn){
                                                         case 1:
-                                                            System.out.print("Saisi Id pour Consulter Annonces :");
+                                                            System.out.print("Saisir Id pour Consulter les Annonces :");
                                                             int Id_ann=sc.nextInt();
                                                             // 1. Kan-akhdou l'objet li rje3 men l-methode
                                                             List<Annonces> listeAnn = annonceService.consulter_toutes_annonces_user(Id_ann);
@@ -114,7 +115,7 @@ public class Main {
                                                             }
                                                             break;
                                                         case 2:
-                                                            System.out.print("Saisi Id de user pour Supprimer :");
+                                                            System.out.print("Saisir Id de l'utilisateur pour Supprimer :");
                                                             int supp=sc.nextInt();
                                                             sc.nextLine();
                                                             if(userConncte.getId()==supp){
@@ -130,15 +131,17 @@ public class Main {
                                                                 }
                                                             }
                                                             break;
+
+                                                        case 3:
+                                                            choixAdmin =0;
+                                                            break;
                                                     }
                                                 }
                                                 break;
                                         case 2:
                                             int nombreAnnonces=adminService.CountAnnonces();//function CountUser
-                                            System.out.println("IL y'a "+nombreAnnonces+" Users Dans Notre Systeme ");
+                                            System.out.println("IL y'a "+nombreAnnonces+" annonces Dans Notre Systeme ");
                                             adminService.ListAnnonce();
-
-
 
                                             break;
 
@@ -151,7 +154,7 @@ public class Main {
                                                     choixAdmin = 10; // Force sortie de la boucle des annonces
                                                     userConncte = null; // Déconnexion
                                                 } else if (x == 'n') {
-                                                    System.out.println("Vous restez connecté.");
+                                                    System.out.println("Vous étes encore connecté.");
                                                     choixAdmin = 0;
                                                     // rien à faire, reste dans la boucle
                                                 } else {
@@ -275,7 +278,7 @@ public class Main {
                                             sc.nextLine(); // bach n-khwiw l-buffer
 
                                             if (optionFav == 1) {
-                                                System.out.print("Saisi l'ID de l'annonce : ");
+                                                System.out.print("Saisir l'ID de l'annonce : ");
                                                 int idAnnonceKhtara = sc.nextInt();
                                                 sc.nextLine();
 
@@ -318,7 +321,7 @@ public class Main {
                                                 String dateStr = sdf.format(f.getDateAjoutFav()); // Smiya d l-getter li derti f l-Model
 
                                                 System.out.println("====================================");
-                                                System.out.println("ID                                      : " + f.getIdFavorie());
+                                                System.out.println("ID                                      : " + f.getId_annonce());
                                                 System.out.println("Titre                                   : " + f.getTitre());
                                                 System.out.println("Description                             : " + f.getDescription());
                                                 System.out.println("Ajouté le                               : " + dateStr); // Ghadi t-ban b s-sway3 w d-dqayq
@@ -332,7 +335,7 @@ public class Main {
                                         break;
                                     case 8:// -------- Supprimer favorie  --------
 
-                                        System.out.print("Donne moi ID d'annonce que tu peux Supprimer :");
+                                        System.out.print("Donne moi ID de l'annonce que vous voulez Supprimer :");
                                         int id=sc.nextInt();
                                         sc.nextLine();
                                         System.out.print  ("Vous etes sur que vous voulez supprimer cette favoris (Y/N) \uD83D\uDDD1\uFE0F :");
@@ -393,12 +396,10 @@ public class Main {
                 System.out.println("********************************************************************");
             }
             catch (InputMismatchException e) {
-                System.out.println("❌ Erreur: Donne moi un numero valide !");
+                System.out.println("❌ Erreur: Saisir un numero valide !");
                 sc.nextLine();
                 continue; // Bach t-rje3 l l-bdya d l-loop bla ma t-kemmel l-switch
             };
-
-
 
 
         };

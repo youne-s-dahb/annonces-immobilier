@@ -31,11 +31,10 @@ public class FavoriesServices {
 
         }
         catch (SQLException e){
-            System.out.println("Error Sql:"+e.getMessage());
+            System.out.println("Erreur lors de l'ajout. Veuillez réessayer plus tard!");
         }
     }
-
-
+    //-----------------------------------------------------------------------------------------------
 
     public List<FaavoriesExtendAnnonces> Consulter_list_favorie(int idUser){
         List<FaavoriesExtendAnnonces> list = new ArrayList<>();
@@ -63,15 +62,13 @@ public class FavoriesServices {
                 );
                 list.add(fav);
             }
-
-
-
         }catch (SQLException e){
-            System.out.println("Error Sql :"+e.getMessage());
+            System.out.println("Erreur lors des consultation. Veuillez réessayer plus tard!");
         }
         return list;
 
     }
+    //---------------------------------------------------------------------------------------------------------------
 
     public void Supprimer_favorie(int id_favorie){
 
@@ -81,15 +78,14 @@ public class FavoriesServices {
                 stmt.setInt(1,id_favorie);
                 int row=stmt.executeUpdate();
                 if (row > 0) {
-                    System.out.println("✅ Favori supprimé avec succès !");
+                    System.out.println("✅ Favorie supprimé avec succès !");
                 } else {
-                    System.out.println("⚠️ Aucun favori trouvé avec cet ID.");
+                    System.out.println("⚠️ Aucun favorie trouvé avec cet ID.");
                 }
             }
             catch (SQLException e){
-                System.out.println("Error Sql :"+e.getMessage());
+                System.out.println("Error lors de la suppression. Veuillez réessayer plus tard!");
             }
     }
-
 
 }
