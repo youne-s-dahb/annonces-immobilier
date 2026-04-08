@@ -68,13 +68,10 @@ public class Main {
                                 while(choixAdmin!=9){
                                     System.out.println("LISTE DE TOUS  LES USERS         (1)");
                                     System.out.println("LISTE DE TOUS  LES ANNONCES      (2)");
-                                    System.out.println("Supprimer un User                (3)");
-                                    System.out.println("Chercher annonce                 (4)");
-                                    System.out.println("Supprimer annonce                (5)");
-                                    System.out.println("Consulter Favoris                (6)");
-                                    System.out.println("Supprimer Favoris                (7)");
-                                    System.out.println("Arreter le programe              (8)");
-                                    System.out.println("Se Deconnecter                   (9)");
+                                    System.out.println("Chercher annonce                 (3)");
+                                    System.out.println("Consulter Favoris                (4)");
+                                    System.out.println("Arreter le programe              (5)");
+                                    System.out.println("Se Deconnecter                   (6)");
                                     System.out.print("Choix : ");
                                     choixAdmin=sc.nextInt();
                                     sc.nextLine();
@@ -84,7 +81,7 @@ public class Main {
                                                 System.out.println("IL y'a "+nombreUser+" Users Dans Notre Systeme ");
                                                 adminService.ListUser();//function ListUser
                                                 int ChoixAn =0;
-                                                while(ChoixAn!=2){
+                                                while(ChoixAn!=3){
                                                     System.out.println("Consulter Annonce User (1) :");
                                                     System.out.println("Supprimer User         (2) :");
                                                     System.out.print("Entrer Votre choix :");
@@ -132,12 +129,19 @@ public class Main {
                                                                     System.out.println("Aucun user Supprimer  ");
                                                                 }
                                                             }
-
-
                                                             break;
                                                     }
                                                 }
                                                 break;
+                                        case 2:
+                                            int nombreAnnonces=adminService.CountAnnonces();//function CountUser
+                                            System.out.println("IL y'a "+nombreAnnonces+" Users Dans Notre Systeme ");
+                                            adminService.ListAnnonce();
+
+
+
+                                            break;
+
                                             case 9://Deconnecter
                                                 System.out.print("Vous etes sur ? (Y/N) : ");
                                                 String input = sc.nextLine().toLowerCase();
