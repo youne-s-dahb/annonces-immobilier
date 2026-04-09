@@ -70,12 +70,12 @@ public class FavoriesServices {
     }
     //---------------------------------------------------------------------------------------------------------------
 
-    public void Supprimer_favorie(int id_favorie){
+    public void Supprimer_favorie(int id_annonce){
 
-            String Sql="DELETE FROM favoris WHERE id_favoris = ?";
+            String Sql="DELETE FROM favoris WHERE id_annonce = ?";
             try(PreparedStatement stmt=con.prepareStatement(Sql))
             {
-                stmt.setInt(1,id_favorie);
+                stmt.setInt(1,id_annonce);
                 int row=stmt.executeUpdate();
                 if (row > 0) {
                     System.out.println("✅ Favorie supprimé avec succès !");
