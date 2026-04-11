@@ -59,6 +59,7 @@ public class Main {
                             }
                         }
                         if (userConncte != null) {
+//_____________________________________________ ADMIN __________________________________________________
 
                             if(userConncte.getRole().equals("Admin")){
 
@@ -293,52 +294,100 @@ public class Main {
 
                                                         break;
                                             case 3:
-                                                System.out.print("Mot clé recherche : ");
-                                                String search = sc.nextLine();
 
-                                                List<Annonces> annonces = annonceService.chercher_annonce(search);
+                                                System.out.println("(1) Filtrer par mot clé");
+                                                System.out.println("(2) Filtrer par prix");
+                                                System.out.print("Votre choix : ");
 
-                                                int i = 0;
-
-                                                while (i < annonces.size()) {
-
-                                                    Annonces a = annonces.get(i);
-
-                                                    System.out.println("------------------------");
-                                                    System.out.println("ID : " + a.getId_annonce());
-                                                    System.out.println("Titre : " + a.getTitre());
-                                                    System.out.println("Prix : " + a.getPrix());
-                                                    System.out.println("Type : " + a.getType());
-                                                    System.out.println("------------------------");
-
-                                                    i++;
+                                                while (!sc.hasNextInt()) {
+                                                    System.out.println("Vous devez saisir un chiffre!!");
+                                                    System.out.print("Saisir votre choix: ");
+                                                    sc.next();
                                                 }
-                                                if (!annonces.isEmpty()) { //AjouterAnnoncesFavoris
-                                                    System.out.println("\n(1) Ajouter une annonce aux favoris");
-                                                    System.out.println("(2) Retour");
-                                                    System.out.print("Votre choix : ");
-                                                    int optionFav = sc.nextInt();
-                                                    sc.nextLine(); // bach n-khwiw l-buffer
+                                                int filtreChoix = sc.nextInt();
+                                                sc.nextLine();
 
-                                                    if (optionFav == 1) {
-                                                        System.out.print("Saisir l'ID de l'annonce : ");
+                                                List<Annonces> annonces = new ArrayList<>();
 
-                                                        while (!sc.hasNextInt()) { // ma7ed input machi r9m
+                                                switch(filtreChoix) {
+                                                    case 1:
+                                                        System.out.print("Mot clé recherche : ");
+                                                        String search = sc.nextLine();
+                                                        annonces = annonceService.chercher_annonce(search);
+                                                        break;
+
+                                                    case 2:
+                                                        System.out.print("Saisir le type (Vente/Location): ");
+                                                        String type = sc.nextLine();
+
+                                                        System.out.print("Saisir le prix minimum: ");
+                                                        while (!sc.hasNextDouble()) {
                                                             System.out.println("Vous devez saisir un chiffre!!");
-                                                            System.out.print("Saisir votre choix: ");
+                                                            System.out.print("Saisir le prix minimum: ");
                                                             sc.next();
                                                         }
+                                                        double prixMin = sc.nextDouble();
 
-                                                        int idAnnonceKhtara = sc.nextInt();
+                                                        System.out.print("Saisir le prix maximum: ");
+                                                        while (!sc.hasNextDouble()) {
+                                                            System.out.println("Vous devez saisir un chiffre!!");
+                                                            System.out.print("Saisir le prix maximum: ");
+                                                            sc.next();
+                                                        }
+                                                        double prixMax = sc.nextDouble();
                                                         sc.nextLine();
 
-                                                        // T-3eyyet l l-service jdid
-                                                        FavoriesServices favService = new FavoriesServices();
-                                                        favService.ajouter_favorie(idAnnonceKhtara, userConncte.getId());
-                                                    }
-                                                } else {
-                                                    System.out.println("Aucune annonce trouvée pour : " + search);
-                                                }
+                                                        annonces = annonceService.filtrer_annonce(type, prixMin, prixMax);
+                                                        break;
+
+                                                    default:
+                                                        System.out.println("❌ Choix invalide!");
+                                                        break;
+                                                            }
+
+                                                            int i = 0;
+
+                                                            while (i < annonces.size()) {
+
+                                                                Annonces a = annonces.get(i);
+
+                                                                System.out.println("------------------------");
+                                                                System.out.println("ID : " + a.getId_annonce());
+                                                                System.out.println("Titre : " + a.getTitre());
+                                                                System.out.println("Prix : " + a.getPrix());
+                                                                System.out.println("Type : " + a.getType());
+                                                                System.out.println("------------------------");
+
+                                                                i++;
+                                                            }
+
+                                                            if (!annonces.isEmpty()) { //AjouterAnnoncesFavoris
+                                                                System.out.println("\n(1) Ajouter une annonce aux favoris");
+                                                                System.out.println("(2) Retour");
+                                                                System.out.print("Votre choix : ");
+                                                                int optionFav = sc.nextInt();
+                                                                sc.nextLine(); // bach n-khwiw l-buffer
+
+                                                                if (optionFav == 1) {
+                                                                    System.out.print("Saisir l'ID de l'annonce : ");
+
+                                                                    while (!sc.hasNextInt()) { // ma7ed input machi r9m
+                                                                        System.out.println("Vous devez saisir un chiffre!!");
+                                                                        System.out.print("Saisir votre choix: ");
+                                                                        sc.next();
+                                                                    }
+
+                                                                    int idAnnonceKhtara = sc.nextInt();
+                                                                    sc.nextLine();
+
+                                                                    // T3eyet l service jdid
+                                                                    FavoriesServices favService = new FavoriesServices();
+                                                                    favService.ajouter_favorie(idAnnonceKhtara, userConncte.getId());
+                                                                }
+                                                            } else {
+                                                                System.out.println("Aucune annonce trouvée avec ces critères!");
+                                                                choixAdmin=0;
+                                                            }
 
                                                 break;
                                             case 4 :
@@ -422,9 +471,9 @@ public class Main {
 
                             System.out.println("Connexion réussie !");
 
-                            //_______________________________________________________________________________________________
+//______________________________________________________________________________________________________
                             int choixAnnonce = 0;
-
+//_____________________________________________ USER __________________________________________________
                             while (choixAnnonce != 10) {
 
                                 System.out.println("\n**** MENU PRINCIPAL ****");
@@ -717,6 +766,7 @@ public class Main {
                 }
 
                 System.out.println("********************************************************************");
+//__________________________________________________________________________________________________________
             }
             catch (InputMismatchException e) {
                 System.out.println("❌ Erreur: Saisir un numero valide !");
