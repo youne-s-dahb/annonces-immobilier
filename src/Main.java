@@ -441,6 +441,12 @@ public class Main {
 
                                 System.out.print("Choix : ");
 
+                                while (!sc.hasNextInt()) { // ma7ed input machi ra9m / hasNextInt = check if int
+                                    System.out.println("Vous devez saisir un chiffre!!");
+                                    System.out.print("Saisir votre choix: ");
+                                    sc.next();
+                                }
+
                                 choixAnnonce = sc.nextInt();
                                 sc.nextLine();
 

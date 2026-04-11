@@ -264,7 +264,7 @@ public class compteService {
             stmUpdate.setString(4, newTelphone);
             stmUpdate.setInt(5, user.getId());
 
-            int rows = stmUpdate.executeUpdate();
+            int rows =  stmUpdate.executeUpdate();
             if (rows > 0) {
                 // Update l-objet f l-mémoire
                 user.setNom(newNom);
@@ -323,15 +323,49 @@ public class compteService {
             }
             //Prix
             System.out.print("Saisir le prix:");
-            double prix = sc.nextDouble();
+            while (!sc.hasNextInt()) { // ma7ed input machi ra9m / hasNextInt = check if int
+                System.out.println("Vous devez saisir un chiffre!!");
+                System.out.print("Saisir votre choix: ");
+                sc.next();
+            }
+
+            double choice = sc.nextDouble();
+
+            while(choice < 0){
+                System.out.println("Vous devez saisir n prix positif!");
+                System.out.print("Saisir le prix: ");
+                while (!sc.hasNextInt()) { // ma7ed input machi ra9m / hasNextInt = check if int
+                    System.out.println("Vous devez saisir un chiffre!!");
+                    System.out.print("Saisir votre choix: ");
+                    sc.next();
+                }
+                choice = sc.nextDouble();
+            }
+
+            double prix = choice;
             sc.nextLine();
 
             //ville
+
             System.out.print("Ville  (1=Oujda,2=Casablanca,3=Rabat,4=Tanger)  : ");
+
+            while (!sc.hasNextInt()) { // ma7ed input machi ra9m / hasNextInt = check if int
+                System.out.println("Vous devez saisir un chiffre!!");
+                System.out.print("Saisir votre choix: ");
+                sc.next();
+            }
+
             int Idville = sc.nextInt();
 
             //Categorie
             System.out.print("Categorie  (1=Appartement,2=Villa,3=Terrain,4=Bureau)  : ");
+
+            while (!sc.hasNextInt()) { // ma7ed input machi ra9m / hasNextInt = check if int
+                System.out.println("Vous devez saisir un chiffre!!");
+                System.out.print("Saisir votre choix: ");
+                sc.next();
+            }
+
             int IdCategorie = sc.nextInt();
 
 
