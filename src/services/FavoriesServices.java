@@ -15,6 +15,23 @@ public class FavoriesServices {
 
     public void ajouter_favorie(int Idannonces,int IdUser){
 
+        // Vérifier si l'annonce est déjà en favori
+        String sqlCheck = "SELECT COUNT(*) FROM favoris WHERE id_annonce = ? AND id_user = ?";
+        try(PreparedStatement stmtCheck = con.prepareStatement(sqlCheck)) {
+            stmtCheck.setInt(1, Idannonces);
+            stmtCheck.setInt(2, IdUser);
+
+            ResultSet rs = stmtCheck.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                System.out.println("❌ Cette annonce est déjà en favoris!");
+                return;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de la vérification. Veuillez réessayer plus tard!");
+            return;
+        }
+
+        //ajouter annonce au favori
 
         String Sql="INSERT INTO `favoris` (Date_ajout,id_annonce,id_user) VALUES (NOW(),?,?) ";
 
@@ -26,16 +43,15 @@ public class FavoriesServices {
             // 3. Execution
             int rows = stmt.executeUpdate();
             if (rows > 0) {
-                System.out.println("Succès: Annonce ajoutée aux favoris !");
+                System.out.println("✅ Annonce ajoutée aux favoris ✅ ");
             }
 
         }
         catch (SQLException e){
-            System.out.println("Error Sql:"+e.getMessage());
+            System.out.println("Erreur lors de l'ajout. Veuillez réessayer plus tard!");
         }
     }
-
-
+    //-----------------------------------------------------------------------------------------------
 
     public List<FaavoriesExtendAnnonces> Consulter_list_favorie(int idUser){
         List<FaavoriesExtendAnnonces> list = new ArrayList<>();
@@ -63,33 +79,30 @@ public class FavoriesServices {
                 );
                 list.add(fav);
             }
-
-
-
         }catch (SQLException e){
-            System.out.println("Error Sql :"+e.getMessage());
+            System.out.println("Erreur lors des consultation. Veuillez réessayer plus tard!");
         }
         return list;
 
     }
+    //---------------------------------------------------------------------------------------------------------------
 
-    public void Supprimer_favorie(int id_favorie){
+    public void Supprimer_favorie(int id_annonce){
 
-            String Sql="DELETE FROM favoris WHERE id_favoris = ?";
+            String Sql="DELETE FROM favoris WHERE id_annonce = ?";
             try(PreparedStatement stmt=con.prepareStatement(Sql))
             {
-                stmt.setInt(1,id_favorie);
+                stmt.setInt(1,id_annonce);
                 int row=stmt.executeUpdate();
                 if (row > 0) {
-                    System.out.println("✅ Favori supprimé avec succès !");
+                    System.out.println("✅ Favorie supprimé avec succès !");
                 } else {
-                    System.out.println("⚠️ Aucun favori trouvé avec cet ID.");
+                    System.out.println("⚠️ Aucun favorie trouvé avec cet ID.");
                 }
             }
             catch (SQLException e){
-                System.out.println("Error Sql :"+e.getMessage());
+                System.out.println("Error lors de la suppression. Veuillez réessayer plus tard!");
             }
     }
-
 
 }

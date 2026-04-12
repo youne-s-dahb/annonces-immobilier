@@ -53,19 +53,21 @@ public class AnnonceService implements annonce{
 
     //Consulter annonce par son ID
     @Override
-    public Annonces consulter_annonce(int id_annonce){
-        String sql = "SELECT a.*, v.* FROM annonce a JOIN ville v ON a.id_ville = v.id_ville WHERE a.id_annonce = ?";
-        Annonces annc = null;
+    public List<Annonces> consulter_toutes_annonces_user(int id_user) {
+        // Requete SQL bach njibu ga3 les annonces dyal had l-user
+        String sql = "SELECT a.*, v.nom_ville FROM annonce a JOIN ville v ON a.id_ville = v.id_ville WHERE a.id_user = ?";
 
-        try(Connection conn = DBConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)){
+        List<Annonces> listeAnnonces = new ArrayList<>(); // Laye7a fine gha-n-jm3ouhom
 
-            stmt.setInt(1, id_annonce);
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id_user);
             ResultSet res = stmt.executeQuery();
 
-            if(res.next()){
-                annc = new Annonces(
-                        res.getInt("id_annonce"), //
+            while (res.next()) { // Kan-st3mlo WHILE bach n-douzou 3la kolchi
+                Annonces annc = new Annonces(
+                        res.getInt("id_annonce"),
                         res.getString("Titre"),
                         res.getString("Description"),
                         res.getDouble("Prix"),
@@ -76,13 +78,15 @@ public class AnnonceService implements annonce{
                         res.getInt("id_ville"),
                         res.getInt("id_categorie")
                 );
+                listeAnnonces.add(annc); // Kan-zidou l-annonce l-liste
             }
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Impossible de récupérer l'annonce pour le moment. Veuillez réessayer plus tard!!");
+            System.out.println("❌ Impossible de récupérer les annonces.");
         }
-        return annc;
+
+        return listeAnnonces; // Kat-rejje3 la liste kamla (t9der t-koun khawya [])
     }
 
     //----------------------------------------------------------------------------------------------------------
