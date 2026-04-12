@@ -71,8 +71,8 @@ public class Main {
                                     System.out.println("Liste de toutes les annonces     (2)");
                                     System.out.println("Chercher annonce                 (3)");
                                     System.out.println("Consulter Favoris                (4)");
-                                    System.out.println("Se Deconnecter                   (5)");
-                                    System.out.println("Arreter le programe              (6)");
+                                    System.out.println("Arreter le programe              (5)");
+                                    System.out.println("Se Deconnecter                   (6)");
                                     System.out.print("Choix : ");
 
                                     while (!sc.hasNextInt()) { // ma7ed input machi ra9m / hasNextInt = check if int
@@ -437,24 +437,24 @@ public class Main {
                                                 }
 
                                                 break;
-                                            case 5://Deconnecter
+                                            case 5://ARRETER LE PROG
                                                         System.out.print("Vous etes sur ? (Y/N) : ");
                                                         String input = sc.nextLine().toLowerCase();
                                                         int x = input.charAt(0);
                                                         if (x == 'y') {
-                                                            System.out.println("Au revoir !!!");
-                                                            choixAdmin = 10; // Force sortie de la boucle des annonces
+                                                            System.out.println("Au revoir admin 😊 !!!");
+                                                            choixAdmin = 6; // Force sortie de la boucle des annonces
                                                             userConncte = null; // Déconnexion
                                                         } else if (x == 'n') {
                                                             System.out.println("Vous étes encore connecté.");
                                                             choixAdmin = 0;
-                                                            // rien à faire, reste dans la boucle
+                                                            // rien faire, reste dans la boucle
                                                         } else {
                                                             System.out.println("Vous devez choisir soit (Y/N)");
                                                         }
                                                         break;
 
-                                            case 6://retour menu principal
+                                            case 6://DECONNECTER + retour menu principal
                                                         System.out.println("Au revoir Admin😊 !!!");
                                                         choix = 0;
                                                         userConncte = null; // Déconnexion
