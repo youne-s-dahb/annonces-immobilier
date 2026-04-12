@@ -81,10 +81,24 @@ public class Annonces {
         this.IdCategorie = idCategorie;
     }
 
+    public Annonces(){}
 
     //constructeur par params:
     public Annonces(int id_annonce, String titre, String description, double prix, String telephone, String type, Date date_publication , int id_user ,int idville,int idCategorie){
         this.id_annonce = id_annonce;
+        this.titre = titre;
+        this.description = description;
+        this.prix = prix;
+        this.telephone = telephone;
+        this.type = type;
+        this.date_publication = date_publication;
+        this.id_user = id_user;
+        this.idville=idville;
+        this.IdCategorie=idCategorie;
+    }
+    //constructeur par params:
+    public Annonces( String titre, String description, double prix, String telephone, String type, Date date_publication , int id_user ,int idville,int idCategorie){
+
         this.titre = titre;
         this.description = description;
         this.prix = prix;

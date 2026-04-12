@@ -8,14 +8,16 @@ public class compte {
     private String gmail ;
     private String password ;
     private String telephone ;
+    private String role;
 
-    public compte(int id ,String Nom,String prenom,String gmail,String password,String telephone){
+    public compte(int id ,String Nom,String prenom,String gmail,String password,String telephone ,String role){
         this.id=id;
         this.Nom=Nom;
         this.prenom=prenom;
         this.gmail=gmail;
         this.password=password;
         this.telephone=telephone;
+        this.role=role;
     }
 
     //---------- GETTER ----------
@@ -37,6 +39,9 @@ public class compte {
     public String getTelephone(){
         return this.telephone;
     }
+    public String getRole(){
+        return this.role;
+    }
     //---------- SETTER ----------
     public void setId(int id){
         this.id=id;
@@ -55,6 +60,9 @@ public class compte {
     }
     public void setTelephone(String telephone){
         this.telephone=telephone;
+    }
+    public void setRole(String role){
+        this.role=role;
     }
     //------------------------------
 }
