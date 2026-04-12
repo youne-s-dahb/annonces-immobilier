@@ -24,7 +24,7 @@ public class Main {
                 System.out.println("************************* MENU de connexion ********************************************");
                 System.out.println("Creer un compte    (1)");
                 System.out.println("Se Connecter       (2)");
-                System.out.print("saisir votre choix  :");
+                System.out.print("Saisir votre choix  :");
 
                 choix = sc.nextInt();
                 sc.nextLine();
@@ -59,6 +59,7 @@ public class Main {
                             }
                         }
                         if (userConncte != null) {
+//_____________________________________________ ADMIN __________________________________________________
 
                             if(userConncte.getRole().equals("Admin")){
 
@@ -70,8 +71,8 @@ public class Main {
                                     System.out.println("Liste de toutes les annonces     (2)");
                                     System.out.println("Chercher annonce                 (3)");
                                     System.out.println("Consulter Favoris                (4)");
-                                    System.out.println("Se Deconnecter                   (5)");
-                                    System.out.println("Arreter le programe              (6)");
+                                    System.out.println("Arreter le programe              (5)");
+                                    System.out.println("Se Deconnecter                   (6)");
                                     System.out.print("Choix : ");
 
                                     while (!sc.hasNextInt()) { // ma7ed input machi ra9m / hasNextInt = check if int
@@ -215,7 +216,7 @@ public class Main {
                                                                         if(validerSuppression.equals("supprimerUser")){
                                                                             adminService.SupprimerUser(supp);
                                                                         }else{
-                                                                            System.out.println("Aucun user Supprimer  ");
+                                                                            System.out.println("Aucun utilisateur Supprimer  ");
                                                                         }
                                                                     }
 
@@ -236,7 +237,7 @@ public class Main {
                                                         while(ChoixAnn!=3) {
 
                                                             System.out.println("Ajouter au  favories                (1) :");
-                                                            System.out.println("Supprimer une annonces  d'un user   (2) :");
+                                                            System.out.println("Supprimer une annonces d'un utilisateur   (2) :");
                                                             System.out.println("Retour au menu principale           (3) :");
                                                             System.out.print("Entrer Votre choix :");
 
@@ -293,52 +294,100 @@ public class Main {
 
                                                         break;
                                             case 3:
-                                                System.out.print("Mot clé recherche : ");
-                                                String search = sc.nextLine();
 
-                                                List<Annonces> annonces = annonceService.chercher_annonce(search);
+                                                System.out.println("(1) Filtrer par mot clé");
+                                                System.out.println("(2) Filtrer par prix");
+                                                System.out.print("Votre choix : ");
 
-                                                int i = 0;
-
-                                                while (i < annonces.size()) {
-
-                                                    Annonces a = annonces.get(i);
-
-                                                    System.out.println("------------------------");
-                                                    System.out.println("ID : " + a.getId_annonce());
-                                                    System.out.println("Titre : " + a.getTitre());
-                                                    System.out.println("Prix : " + a.getPrix());
-                                                    System.out.println("Type : " + a.getType());
-                                                    System.out.println("------------------------");
-
-                                                    i++;
+                                                while (!sc.hasNextInt()) {
+                                                    System.out.println("Vous devez saisir un chiffre!!");
+                                                    System.out.print("Saisir votre choix: ");
+                                                    sc.next();
                                                 }
-                                                if (!annonces.isEmpty()) { //AjouterAnnoncesFavoris
-                                                    System.out.println("\n(1) Ajouter une annonce aux favoris");
-                                                    System.out.println("(2) Retour");
-                                                    System.out.print("Votre choix : ");
-                                                    int optionFav = sc.nextInt();
-                                                    sc.nextLine(); // bach n-khwiw l-buffer
+                                                int filtreChoix = sc.nextInt();
+                                                sc.nextLine();
 
-                                                    if (optionFav == 1) {
-                                                        System.out.print("Saisir l'ID de l'annonce : ");
+                                                List<Annonces> annonces = new ArrayList<>();
 
-                                                        while (!sc.hasNextInt()) { // ma7ed input machi r9m
+                                                switch(filtreChoix) {
+                                                    case 1:
+                                                        System.out.print("Mot clé recherche : ");
+                                                        String search = sc.nextLine();
+                                                        annonces = annonceService.chercher_annonce(search);
+                                                        break;
+
+                                                    case 2:
+                                                        System.out.print("Saisir le type (Vente/Location): ");
+                                                        String type = sc.nextLine();
+
+                                                        System.out.print("Saisir le prix minimum: ");
+                                                        while (!sc.hasNextDouble()) {
                                                             System.out.println("Vous devez saisir un chiffre!!");
-                                                            System.out.print("Saisir votre choix: ");
+                                                            System.out.print("Saisir le prix minimum: ");
                                                             sc.next();
                                                         }
+                                                        double prixMin = sc.nextDouble();
 
-                                                        int idAnnonceKhtara = sc.nextInt();
+                                                        System.out.print("Saisir le prix maximum: ");
+                                                        while (!sc.hasNextDouble()) {
+                                                            System.out.println("Vous devez saisir un chiffre!!");
+                                                            System.out.print("Saisir le prix maximum: ");
+                                                            sc.next();
+                                                        }
+                                                        double prixMax = sc.nextDouble();
                                                         sc.nextLine();
 
-                                                        // T-3eyyet l l-service jdid
-                                                        FavoriesServices favService = new FavoriesServices();
-                                                        favService.ajouter_favorie(idAnnonceKhtara, userConncte.getId());
-                                                    }
-                                                } else {
-                                                    System.out.println("Aucune annonce trouvée pour : " + search);
-                                                }
+                                                        annonces = annonceService.filtrer_annonce(type, prixMin, prixMax);
+                                                        break;
+
+                                                    default:
+                                                        System.out.println("❌ Choix invalide!");
+                                                        break;
+                                                            }
+
+                                                            int i = 0;
+
+                                                            while (i < annonces.size()) {
+
+                                                                Annonces a = annonces.get(i);
+
+                                                                System.out.println("------------------------");
+                                                                System.out.println("ID : " + a.getId_annonce());
+                                                                System.out.println("Titre : " + a.getTitre());
+                                                                System.out.println("Prix : " + a.getPrix());
+                                                                System.out.println("Type : " + a.getType());
+                                                                System.out.println("------------------------");
+
+                                                                i++;
+                                                            }
+
+                                                            if (!annonces.isEmpty()) { //AjouterAnnoncesFavoris
+                                                                System.out.println("\n(1) Ajouter une annonce aux favoris");
+                                                                System.out.println("(2) Retour");
+                                                                System.out.print("Votre choix : ");
+                                                                int optionFav = sc.nextInt();
+                                                                sc.nextLine(); // bach n-khwiw l-buffer
+
+                                                                if (optionFav == 1) {
+                                                                    System.out.print("Saisir l'ID de l'annonce : ");
+
+                                                                    while (!sc.hasNextInt()) { // ma7ed input machi r9m
+                                                                        System.out.println("Vous devez saisir un chiffre!!");
+                                                                        System.out.print("Saisir votre choix: ");
+                                                                        sc.next();
+                                                                    }
+
+                                                                    int idAnnonceKhtara = sc.nextInt();
+                                                                    sc.nextLine();
+
+                                                                    // T3eyet l service jdid
+                                                                    FavoriesServices favService = new FavoriesServices();
+                                                                    favService.ajouter_favorie(idAnnonceKhtara, userConncte.getId());
+                                                                }
+                                                            } else {
+                                                                System.out.println("Aucune annonce trouvée avec ces critères!");
+                                                                choixAdmin=0;
+                                                            }
 
                                                 break;
                                             case 4 :
@@ -388,25 +437,25 @@ public class Main {
                                                 }
 
                                                 break;
-                                            case 5://Deconnecter
+                                            case 5://ARRETER LE PROG
                                                         System.out.print("Vous etes sur ? (Y/N) : ");
                                                         String input = sc.nextLine().toLowerCase();
                                                         int x = input.charAt(0);
                                                         if (x == 'y') {
-                                                            System.out.println("Au revoir !!!");
-                                                            choixAdmin = 10; // Force sortie de la boucle des annonces
+                                                            System.out.println("Au revoir admin 😊 !!!");
+                                                            choixAdmin = 6; // Force sortie de la boucle des annonces
                                                             userConncte = null; // Déconnexion
                                                         } else if (x == 'n') {
                                                             System.out.println("Vous étes encore connecté.");
                                                             choixAdmin = 0;
-                                                            // rien à faire, reste dans la boucle
+                                                            // rien faire, reste dans la boucle
                                                         } else {
                                                             System.out.println("Vous devez choisir soit (Y/N)");
                                                         }
                                                         break;
 
-                                            case 6://retour menu principal
-                                                        System.out.println("Au revoir Admin 🙂 !!!");
+                                            case 6://DECONNECTER + retour menu principal
+                                                        System.out.println("Au revoir Admin😊 !!!");
                                                         choix = 0;
                                                         userConncte = null; // Déconnexion
 
@@ -422,9 +471,9 @@ public class Main {
 
                             System.out.println("Connexion réussie !");
 
-                            //_______________________________________________________________________________________________
+//______________________________________________________________________________________________________
                             int choixAnnonce = 0;
-
+//_____________________________________________ USER __________________________________________________
                             while (choixAnnonce != 10) {
 
                                 System.out.println("\n**** MENU PRINCIPAL ****");
@@ -440,6 +489,12 @@ public class Main {
                                 System.out.println("Se Deconnecter          (10)");
 
                                 System.out.print("Choix : ");
+
+                                while (!sc.hasNextInt()) { // ma7ed input machi ra9m / hasNextInt = check if int
+                                    System.out.println("Vous devez saisir un chiffre!!");
+                                    System.out.print("Saisir votre choix: ");
+                                    sc.next();
+                                }
 
                                 choixAnnonce = sc.nextInt();
                                 sc.nextLine();
@@ -500,10 +555,55 @@ public class Main {
 
                                     case 5:// -------- CHERCHER ANNONCE --------
 
-                                        System.out.print("Mot clé recherche : ");
-                                        String search = sc.nextLine();
+                                        System.out.println("(1) Filtrer par mot clé");
+                                        System.out.println("(2) Filtrer par prix");
+                                        System.out.print("Votre choix : ");
 
-                                        List<Annonces> annonces = annonceService.chercher_annonce(search);
+                                        while (!sc.hasNextInt()) {
+                                            System.out.println("Vous devez saisir un chiffre!!");
+                                            System.out.print("Saisir votre choix: ");
+                                            sc.next();
+                                        }
+                                        int filtreChoix = sc.nextInt();
+                                        sc.nextLine();
+
+                                        List<Annonces> annonces = new ArrayList<>();
+
+                                        switch(filtreChoix) {
+                                            case 1:
+                                                System.out.print("Mot clé recherche : ");
+                                                String search = sc.nextLine();
+                                                annonces = annonceService.chercher_annonce(search);
+                                                break;
+
+                                            case 2:
+                                                System.out.print("Saisir le type (Vente/Location): ");
+                                                String type = sc.nextLine();
+
+                                                System.out.print("Saisir le prix minimum: ");
+                                                while (!sc.hasNextDouble()) {
+                                                    System.out.println("Vous devez saisir un chiffre!!");
+                                                    System.out.print("Saisir le prix minimum: ");
+                                                    sc.next();
+                                                }
+                                                double prixMin = sc.nextDouble();
+
+                                                System.out.print("Saisir le prix maximum: ");
+                                                while (!sc.hasNextDouble()) {
+                                                    System.out.println("Vous devez saisir un chiffre!!");
+                                                    System.out.print("Saisir le prix maximum: ");
+                                                    sc.next();
+                                                }
+                                                double prixMax = sc.nextDouble();
+                                                sc.nextLine();
+
+                                                annonces = annonceService.filtrer_annonce(type, prixMin, prixMax);
+                                                break;
+
+                                            default:
+                                                System.out.println("❌ Choix invalide!");
+                                                break;
+                                        }
 
                                         int i = 0;
 
@@ -520,6 +620,7 @@ public class Main {
 
                                             i++;
                                         }
+
                                         if (!annonces.isEmpty()) { //AjouterAnnoncesFavoris
                                             System.out.println("\n(1) Ajouter une annonce aux favoris");
                                             System.out.println("(2) Retour");
@@ -539,12 +640,12 @@ public class Main {
                                                 int idAnnonceKhtara = sc.nextInt();
                                                 sc.nextLine();
 
-                                                // T-3eyyet l l-service jdid
+                                                // T3eyet l service jdid
                                                 FavoriesServices favService = new FavoriesServices();
                                                 favService.ajouter_favorie(idAnnonceKhtara, userConncte.getId());
                                             }
                                         } else {
-                                            System.out.println("Aucune annonce trouvée pour : " + search);
+                                            System.out.println("Aucune annonce trouvée avec ces critères!");
                                             choixAnnonce=0;
                                         }
 
@@ -622,7 +723,7 @@ public class Main {
                                         }
                                         break;
 
-                                    case 9://Deconnecter
+                                    case 9://Arreter le prog
                                         System.out.print("Vous etes sur ? (Y/N) : ");
                                         String input = sc.nextLine().toLowerCase();
                                         x = input.charAt(0);
@@ -639,7 +740,7 @@ public class Main {
                                         }
                                         break;
 
-                                    case 10://retour menu principal
+                                    case 10://se deconnecter + retour au menu
                                         System.out.println("Au revoir !!!");
                                         choix = 0;
                                         userConncte = null; // Déconnexion
@@ -665,6 +766,7 @@ public class Main {
                 }
 
                 System.out.println("********************************************************************");
+//__________________________________________________________________________________________________________
             }
             catch (InputMismatchException e) {
                 System.out.println("❌ Erreur: Saisir un numero valide !");
