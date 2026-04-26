@@ -8,7 +8,7 @@ public class Visiteur extends User{
         super(0,Nom, prenom, gmail, password, telephone);
     }*/
 }
-/*public void s_inscrire(){
+/*public void  s_inscrire(){
     System.out.println("Le visiteur s'inscrit");
 
 }*/
