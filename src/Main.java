@@ -31,7 +31,7 @@ public class Main {
 
                 switch (choix) {
                     case 1://feha Register_User
-                        System.out.println("***********************Enregistrer utilisateur********************************");
+                        System.out.println("*********************** S'inscrire ********************************");
                         service.Register_User(sc);//Register_User
                         System.out.println("********************************************************************");
                         break;
@@ -42,7 +42,7 @@ public class Main {
                         while (!loginReussi){
                             try{
 
-                                System.out.println("***********************Login********************************");
+                                System.out.println("*********************** Se connecter ********************************");
                                 System.out.print("Saisir votre gmail :");
                                 String gmail = sc.nextLine();
 
@@ -69,9 +69,9 @@ public class Main {
                                 while(choixAdmin!=6){
                                     System.out.println("Liste de tous les utilisateurs   (1)");
                                     System.out.println("Liste de toutes les annonces     (2)");
-                                    System.out.println("Chercher annonce                 (3)");
+                                    System.out.println("Chercher une annonce                 (3)");
                                     System.out.println("Consulter Favoris                (4)");
-                                    System.out.println("Arreter le programe              (5)");
+                                    System.out.println("Arreter le programme              (5)");
                                     System.out.println("Se Deconnecter                   (6)");
                                     System.out.print("Choix : ");
 
@@ -93,7 +93,7 @@ public class Main {
                                                             System.out.println("Consulter Annonce d'un utilisateur  (1) :");
                                                             System.out.println("Supprimer un utilisateur            (2) :");
                                                             System.out.println("Retour au menu principale           (3) :");
-                                                            System.out.print("Entrer Votre choix :");
+                                                            System.out.print("Saisir Votre choix :");
 
                                                             while (!sc.hasNextInt()) { // ma7ed input machi r9m
                                                                 System.out.println("Vous devez saisir un chiffre!!");
@@ -117,7 +117,7 @@ public class Main {
 
                                                                     // 2. Kan-t-checkiw wach l9ah (machi null)
                                                                     if (listeAnn != null && !listeAnn.isEmpty()) {
-                                                                        System.out.println("\n--- ✨ Détails de l'Annonce ---");
+                                                                        System.out.println("\n--- ✨ Détails de l'Annonce ✨ ---");
                                                                         for (Annonces a : listeAnn) {
 
                                                                             System.out.println("Id annonces            : " + a.getId_annonce());
@@ -177,7 +177,7 @@ public class Main {
                                                                                         if(validerSuppression.equals("supprimerAnnoncesUser")){
                                                                                             annonceService.Supprimer_Annonces(supp);
                                                                                         }else{
-                                                                                            System.out.println("Aucun Annonces Supprimer  ");
+                                                                                            System.out.println("Aucune Annonce Supprimé ! ");
                                                                                         }
 
                                                                                     break;
@@ -196,7 +196,7 @@ public class Main {
 
                                                                     break;
                                                                 case 2:
-                                                                    System.out.print("Saisir Id de l'utilisateur pour Supprimer :");
+                                                                    System.out.print("Saisir Id de l'utilisateur que vous voulez Supprimer :");
 
                                                                     while (!sc.hasNextInt()) { // ma7ed input machi r9m
                                                                         System.out.println("Vous devez saisir un chiffre!!");
@@ -216,7 +216,7 @@ public class Main {
                                                                         if(validerSuppression.equals("supprimerUser")){
                                                                             adminService.SupprimerUser(supp);
                                                                         }else{
-                                                                            System.out.println("Aucun utilisateur Supprimer  ");
+                                                                            System.out.println("Aucun utilisateur Supprimé  ");
                                                                         }
                                                                     }
 
@@ -263,7 +263,7 @@ public class Main {
                                                                     favoriesServices.ajouter_favorie(ajouAnnonces,userConncte.getId());
                                                                     break;
                                                                 case 2:
-                                                                    System.out.print("Saisir Id de l'annonce pour Supprimer Annonces User:");
+                                                                    System.out.print("Saisir Id de l'annonce sue vous voulez supprimer:");
 
                                                                     while (!sc.hasNextInt()) { // ma7ed input machi r9m
                                                                         System.out.println("Vous devez saisir un chiffre!!");
@@ -279,7 +279,7 @@ public class Main {
                                                                     if(validerSuppression.equals("supprimerAnnoncesUser")){
                                                                         annonceService.Supprimer_Annonces(supp);
                                                                     }else{
-                                                                        System.out.println("Aucun Annonces Supprimer  ");
+                                                                        System.out.println("Aucune Annonce Supprimé !");
                                                                     }
 
                                                                     break;
